@@ -1,0 +1,21 @@
+.treeContainer {
+  padding: 16px;
+  width: 300px; /* Или другая ширина по вашему вкусу */
+  border-right: 1px solid #ccc; /* Добавляем разделитель */
+}
+
+.treeItem {
+  padding: 4px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.nested {
+  padding-left: 16px;
+}
+
+.active {
+  font-weight: bold;
+}
