@@ -1,19 +1,38 @@
-import React from 'react';
+// External imports
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { StrictMode } from 'react';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+// Local imports
+import App from './app';
+import initI18n from './lang';
+import reportWebVitals from './util/web-vitals';
+import './styles/main.scss';
+
+// Global initialization
+initI18n();
+
+const htmlRoot = document.getElementById('root') as HTMLElement;
+const reactRoot = ReactDOM.createRoot(htmlRoot);
+
+reactRoot.render(
+  process.env.REACT_APP_SCRICT_MODE === 'true' ? (
+    <StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StrictMode>
+  ) : (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  ),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+if (process.env.REACT_APP_REPORT_WEB_VITALS === 'true') {
+  // If you want to start measuring performance in your app, pass a function
+  // to log results (for example: reportWebVitals(console.log))
+  // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  // eslint-disable-next-line no-console
+  reportWebVitals(console.log);
+}
