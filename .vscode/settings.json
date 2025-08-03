@@ -2,7 +2,7 @@
   // VS Code workspace settings.
   // Learn more: https://code.visualstudio.com/docs/getstarted/settings
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "files.eol": "\n",
   "javascript.preferences.quoteStyle": "single",

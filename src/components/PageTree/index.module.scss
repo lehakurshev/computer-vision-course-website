@@ -1,21 +1,18 @@
-.treeContainer {
+.pageTree {
   padding: 16px;
-  width: 300px; /* Или другая ширина по вашему вкусу */
-  border-right: 1px solid #ccc; /* Добавляем разделитель */
+  background-color: #f5f5f5;
+  border-radius: 8px;
 }
 
-.treeItem {
-  padding: 4px 0;
-  cursor: pointer;
-  &:hover {
-    background-color: #f0f0f0;
-  }
+.section {
+  margin-bottom: 8px;
 }
 
-.nested {
-  padding-left: 16px;
+.subsection {
+  margin-left: 20px;
+  margin-bottom: 4px;
 }
 
-.active {
-  font-weight: bold;
+.subsubsection {
+  margin-left: 40px;
 }

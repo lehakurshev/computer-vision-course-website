@@ -1,22 +1,24 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import PageTree from './index';
 
-const testTreeData = [
-  { id: '1', label: 'Section 1' },
-  { id: '2', label: 'Section 2' },
+const data = [
+  {
+    id: '1',
+    name: 'Section 1',
+    children: [
+      {
+        id: '1-1',
+        name: 'Subsection 1-1',
+        children: [],
+      },
+    ],
+  },
 ];
 
-describe('PageTree Component', () => {
-  it('renders without crashing', () => {
-    render(<PageTree treeData={testTreeData} onNodeClick={() => {}} />);
-    expect(screen.getByText('Section 1')).toBeInTheDocument();
-  });
-
-  it('calls onNodeClick when a node is clicked', () => {
-    const mockOnNodeClick = jest.fn();
-    render(<PageTree treeData={testTreeData} onNodeClick={mockOnNodeClick} />);
-    fireEvent.click(screen.getByText('Section 1'));
-    expect(mockOnNodeClick).toHaveBeenCalledWith('1');
-  });
+test('renders PageTree with sections and subsections', () => {
+  
+  
+  expect(screen.getByText(/Section 1/i)).toBeInTheDocument();
+  expect(screen.getByText(/Subsection 1-1/i)).toBeInTheDocument();
 });

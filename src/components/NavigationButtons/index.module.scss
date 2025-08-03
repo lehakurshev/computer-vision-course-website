@@ -1,0 +1,11 @@
+.navigationButtons {
+  // Общие стили для контейнера кнопок
+  // Например:
+  // display: flex;
+  // justify-content: center;
+
+  .MuiButton-root { // Стили для кнопок Material-UI
+    text-transform: none; // Отключаем uppercase
+    font-size: 1rem;
+  }
+}
