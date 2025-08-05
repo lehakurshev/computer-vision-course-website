@@ -16,7 +16,7 @@
   "scss.validate": false,
   "stylelint.validate": ["css", "scss"],
   "[scss]": {
-    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+    "editor.defaultFormatter": "vscode.css-language-features"
   },
   "files.associations": {
     ".env.https.local": "dotenv"
