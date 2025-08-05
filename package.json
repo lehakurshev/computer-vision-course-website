@@ -1,7 +1,7 @@
 {
-  "name": "Онлайн-курс Основы компьютерного зрения",
+  "name": "computer-vision-course-website",
   "version": "0.1.0",
-  "description": "Онлайн-курс Основы компьютерного зрения",
+  "description": "computer-vision-course-website",
   "private": false,
   "homepage": "./",
   "keywords": [
