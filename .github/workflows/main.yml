@@ -23,7 +23,7 @@ jobs:
       - name: Configure SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
+          ssh-private-key: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
 
       - name: Deploy to Server
         run: |
