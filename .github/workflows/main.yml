@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  SERVER_HOST: ${{ secrets.HOST_IP_ADDRESS }}
+  SERVER_USER: ${{ secrets.HOST_USER_NAME }}
+  YOOKASSA_SHOP_ID: ${{ secrets.YOOKASSA_SHOP_ID }}
+  YOOKASSA_SHOP_SECRET: ${{ secrets.YOOKASSA_SHOP_SECRET }}
+  PROJECT_PATH: /home/lehakurshev/computer-vision-course-website
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Ensure we have the entire git history
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
+
+      - name: Deploy to Server
+        run: |
+          # Update code on server (fetch latest changes from main and reset)
+          ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
+            cd ${{ env.PROJECT_PATH }};
+            git fetch --all;
+            git reset --hard origin/main;
+          "
+
+          # Run Docker Compose
+          ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
+            cd ${{ env.PROJECT_PATH }};
+            export YOOKASSA_SHOP_ID='${{ env.YOOKASSA_SHOP_ID }}';
+            export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
+            docker-compose up --build -d
+          "
