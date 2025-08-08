@@ -1,0 +1,109 @@
+@import '../../styles/_colors.scss';
+
+.home-page {
+  &__background {
+    background-color: $color-1;
+  }
+}
+
+.course-info-section {
+  padding: 20px;
+  margin-left: 100px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  h1 {
+    color: white;
+    font-size: 50px;
+    padding: 10px;
+    padding-Left: 0;
+  }
+
+  &__subtitle {
+    margin-bottom: 100px;
+  }
+}
+
+.course-program {
+  width: 76%;
+  background-color: $color-3;
+  border-radius: 10px;
+  padding: 20px;
+  padding-left: 50px;
+  padding-bottom: 100px;
+
+
+  &__part {
+    width: 40%;
+    float: left;
+    margin-right: 50px;
+    margin-top: 50px;
+
+    &-title {
+      font-size: 30px;
+    }
+  }
+
+  &__list-container {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__list-marker {
+    width: 20px;
+    text-align: left;
+    padding-right: 50px;
+  }
+
+  &__list-item {
+    font-size: 20px;
+    padding-top: 30px;
+    padding-bottom: 0;
+  }
+
+  &__clear {
+    clear: both;
+  }
+}
+
+.payment-section {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.payment-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.payment-modal {
+  width: 50%;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.modal-box {
+  height: 0;
+}
+
+.modal-iframe {
+  background-color: white;
+  border: none;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+
+.telegram-news {
+  text-align: right;
+  margin-right: 50px;
+  margin-top: 700px;
+}

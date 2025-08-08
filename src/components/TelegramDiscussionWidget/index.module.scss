@@ -1,6 +1,28 @@
-/**
- * Style file for the HelloWorld component.
- */
-.info {
-  font-size: 0.875rem; /* 14px */
+@import '../../styles/_colors.scss';
+
+.widgetContainer {
+  background-color: $color-1;
+  height: 2000px;
+}
+
+.gridContainer {
+  background-color: $color-1;
+  height: 100%;
+}
+
+.gridItem {
+  margin-left: 50px;
+  height: 100%;
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    margin-left: 90px; // Отступ только для второго и третьего элементов
+  }
+}
+
+.iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }

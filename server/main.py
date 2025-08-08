@@ -6,7 +6,7 @@ from fastapi import FastAPI, Response
 import os
 app = FastAPI()
 
-Configuration.configure('1137494', 'test_7jTPkDwn6Qu4noxevXxU-TRmJoLKo03C5Up3LWZSqJs')
+Configuration.configure(os.getenv('YOOKASSA_SHOP_ID'), os.getenv('YOOKASSA_SHOP_SECRET'))
 
 @app.get("/get-yookassa-widget")
 async def get_yookassa_widget():
