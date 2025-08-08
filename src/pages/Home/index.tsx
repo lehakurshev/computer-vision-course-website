@@ -99,7 +99,7 @@ function HomePage() {
         </div>
         <div className="payment-section">
           <Button variant="contained" className="payment-button" onClick={handleOpen}>
-            Оплатить курс
+            Оплатить курс!
           </Button>
         </div>
         <Modal
