@@ -20,44 +20,44 @@ function HomePage() {
             <div className="course-program__part">
               <p className="course-program__part-title">Первая часть</p>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Введение формирование изображений</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Цвет</li>
+                  <ul>
+                    <li>Введение формирование изображений</li>
+                    <li>Цвет</li>
                   </ul>
                 </div>
               </div>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Морфологические операции</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Знакомство с OpenCV</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Методы улучшения изображений</li>
+                  <ul>
+                    <li>Морфологические операции</li>
+                    <li>Знакомство с OpenCV</li>
+                    <li>Методы улучшения изображений</li>
                   </ul>
                 </div>
               </div>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Фильтрация</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Сглаживание</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Поиск контуров</li>
+                  <ul>
+                    <li>Фильтрация</li>
+                    <li>Сглаживание</li>
+                    <li>Поиск контуров</li>
                   </ul>
                 </div>
               </div>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Поиск лиц</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Анализ фона и движения на видео</li>
+                  <ul>
+                    <li>Поиск лиц</li>
+                    <li>Анализ фона и движения на видео</li>
                   </ul>
                 </div>
               </div>
@@ -65,31 +65,31 @@ function HomePage() {
             <div className="course-program__part">
               <p className="course-program__part-title">Вторая часть</p>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Поиск по шаблону</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Ключевые точки</li>
+                  <ul>
+                    <li>Поиск по шаблону</li>
+                    <li>Ключевые точки</li>
                   </ul>
                 </div>
               </div>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Сглаживание с сохранением границ</li>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Сегментация изображений</li>
+                  <ul>
+                    <li>Сглаживание с сохранением границ</li>
+                    <li>Сегментация изображений</li>
                   </ul>
                 </div>
               </div>
               <div className="course-program__list-container">
-                <div style={{ width: '20px', textAlign: 'left'}}>
+                <div className="course-program__list-marker">
                 </div>
                 <div>
-                  <ul style={{ paddingTop: '30px'}}>
-                    <li style={{ paddingTop: '0', paddingBottom: '0' }}>Стереосопоставление</li>
+                  <ul>
+                    <li>Стереосопоставление</li>
                   </ul>
                 </div>
               </div>

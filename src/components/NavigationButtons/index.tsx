@@ -10,7 +10,6 @@ interface NavigationButtonsProps {
 
 const NavigationButtons: React.FC<NavigationButtonsProps> = ({ className }) => {
   return (
-    // <div style={{ width: '50%' }}></div>
     <div style={{ display: 'flex' }} className={styles.homeGradientBackground}>
       <Icon style={{ width: '120px', height: '50px', marginLeft: '30px', marginTop: '20px'}} />
       <Grid container spacing={0} className={`${styles.navigationButtons} ${className || ''}`} style={{ width: '50%' }}>

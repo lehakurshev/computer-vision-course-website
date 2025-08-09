@@ -3,61 +3,63 @@
 .home-page {
   &__background {
     background-color: $color-1;
+    padding: 20px; // Add some padding for mobile screens
   }
 }
 
 .course-info-section {
-  padding: 20px;
-  margin-left: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%; // Occupy most of the screen width, but leave some margin
   border-radius: 8px;
   margin-bottom: 20px;
+  
 
   h1 {
     color: white;
-    font-size: 50px;
+    font-size: 2rem; // Responsive font size
     padding: 10px;
     padding-Left: 0;
   }
 
   &__subtitle {
-    margin-bottom: 100px;
+    margin-bottom: 50px; // Adjust spacing for smaller screens
   }
 }
 
 .course-program {
-  width: 76%;
+  width: 95%; // Full width for mobile
+  margin-right: auto;
   background-color: $color-3;
   border-radius: 10px;
   padding: 20px;
-  padding-left: 50px;
-  padding-bottom: 100px;
-
+  padding-top: 0;
 
   &__part {
-    width: 40%;
-    float: left;
-    margin-right: 50px;
-    margin-top: 50px;
+    width: 100%; // Full width for mobile
+    margin-right: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: none;
 
     &-title {
-      font-size: 30px;
+      font-size: 1.5rem;
     }
   }
 
   &__list-container {
     display: flex;
     align-items: flex-start;
+    padding-top: 15px;
   }
 
   &__list-marker {
     width: 20px;
     text-align: left;
-    padding-right: 50px;
   }
 
   &__list-item {
-    font-size: 20px;
-    padding-top: 30px;
+    padding-top: 0;
     padding-bottom: 0;
   }
 
@@ -79,6 +81,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
 
   &:hover {
     background-color: #45a049;
@@ -86,24 +89,78 @@
 }
 
 .payment-modal {
-  width: 50%;
-  height: 400px;
+  width: 90%; // Adjust modal width for mobile
+  height: auto;
   margin: 0 auto;
 }
 
 .modal-box {
-  height: 0;
+  height: auto;
 }
 
 .modal-iframe {
   background-color: white;
   border: none;
-  margin-top: 50px;
+  margin-top: 20px;
   border-radius: 10px;
+  height: 600px; // Adjust iframe height for mobile
 }
 
 .telegram-news {
-  text-align: right;
-  margin-right: 50px;
-  margin-top: 700px;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+}
+
+/* Media Query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  .course-info-section {
+    margin-left: 100px;
+    margin-right: 0px;
+    text-align: left;
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    &__subtitle {
+      margin-bottom: 100px;
+    }
+  }
+
+  .course-program {
+    width: 76%;
+    padding-left: 50px;
+  }
+
+  .course-program__part {
+    width: 40%;
+    float: left;
+    margin-right: 50px;
+    margin-top: 50px;
+
+    &-title {
+      font-size: 2rem;
+    }
+  }
+
+  .payment-button {
+    font-size: 1.2rem;
+  }
+
+  .payment-modal {
+    width: 50%;
+  }
+
+  .modal-iframe {
+    margin-top: 50px;
+    height: 750px;
+  }
+
+  .telegram-news {
+    text-align: right;
+    margin-right: 50px;
+    margin-top: 700px;
+  }
 }
