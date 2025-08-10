@@ -37,6 +37,7 @@ jobs:
           # Run Docker Compose
           ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
             cd ${{ env.PROJECT_PATH }};
+            export SERVER_HOST='${{ env.SERVER_HOST }}';
             export YOOKASSA_SHOP_ID='${{ env.YOOKASSA_SHOP_ID }}';
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
             docker-compose up --build -d
