@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+    environment:
+      SERVER_HOST: ${SERVER_HOST}
   backend:
     build:
       context: ./server
