@@ -108,12 +108,12 @@ function HomePage() {
           open={open}
           onClose={handleClose}
           closeAfterTransition
-          style={{ width: '50%', height: '400px', margin: '0 auto' }}
+          className="payment-modal"
         >
           <Fade in={open} >
-            <Box className="modal-box" style={{ height: '0' }}>
-              <iframe className="modal-iframe" style={{ backgroundColor: 'white', border: 'none', marginTop: '50px', borderRadius: '10px' }}
-                src={`http://${process.env.REACT_APP_SERVER_HOST || process.env.REACT_APP_IP_ADDRESS}:${process.env.REACT_APP_BACK_PORT}/get-yookassa-widget`} width="100%" height="750px"></iframe>
+            <Box className="modal-box">
+              <iframe className="modal-iframe"
+                src={`http://${process.env.REACT_APP_IP_ADDRESS}:${process.env.REACT_APP_BACK_PORT}/get-yookassa-widget`} width="100%" height="750px"></iframe>
             </Box>
           </Fade>
         </Modal>
