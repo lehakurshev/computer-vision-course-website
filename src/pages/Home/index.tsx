@@ -112,8 +112,13 @@ function HomePage() {
         >
           <Fade in={open} >
             <Box className="modal-box">
-              <iframe className="modal-iframe"
-                src={`http://${process.env.REACT_APP_SERVER_HOST || process.env.REACT_APP_IP_ADDRESS}:${process.env.REACT_APP_BACK_PORT}/get-yookassa-widget`} width="100%" height="750px"></iframe>            </Box>
+              <div className="modal-wrapper">
+                <div className="modal-glass">
+                  <iframe className="modal-iframe"
+                    src={`http://${process.env.REACT_APP_SERVER_HOST || process.env.REACT_APP_IP_ADDRESS}:${process.env.REACT_APP_BACK_PORT}/get-yookassa-widget`} width="100%" height="750px"></iframe>
+                </div>
+              </div>
+            </Box>
           </Fade>
         </Modal>
         <div className="course-info-section">
