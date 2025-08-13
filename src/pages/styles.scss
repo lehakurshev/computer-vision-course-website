@@ -1,189 +1,39 @@
 @import '../styles/_colors.scss';
 
-.home-page {
-  &__background {
-    background-color: $color-1;
-    padding: 20px; // Add some padding for mobile screens
-  }
+.course-section {
+  transition: all 0.3s ease;
 }
 
-.course-info-section {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 90%; // Occupy most of the screen width, but leave some margin
-  border-radius: 8px;
-  margin-bottom: 60px;
-  
-
-  h1 {
-    color: white;
-    font-size: 2rem; // Responsive font size
-    padding: 10px;
-    padding-Left: 0;
-  }
-
-  &__subtitle {
-    margin-bottom: 50px; // Adjust spacing for smaller screens
-  }
+.course-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.course-program {
-  margin-right: auto;
-  background-color: $color-3;
-  border-radius: 10px;
-  padding: 20px;
-  padding-top: 0;
-
-  &__part {
-    width: 100%; // Full width for mobile
-    margin-right: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    float: none;
-
-    &-title {
-      font-size: 1.5rem;
-    }
-  }
-
-  &__list-container {
-    display: flex;
-    align-items: flex-start;
-    padding-top: 15px;
-  }
-
-  &__list-marker {
-    width: 20px;
-    text-align: left;
-  }
-
-  &__list-item {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  &__clear {
-    clear: both;
-  }
+.subsection-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 
-.payment-section {
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+.subsection-content.show {
+  max-height: 1000px;
 }
 
-.payment-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: #45a049;
-  }
-}
-
-.payment-modal {
-  width: 90%; // Adjust modal width for mobile
-  height: auto;
-  margin: 0 auto;
-}
-
-.modal-box {
-  height: auto;
-}
-
-.modal-wrapper {
+.nav-link {
   position: relative;
-  margin-top: 20px;
-  border-radius: 10px;
-  overflow: hidden; /* чтобы скругление применялось к содержимому/тени */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Эффект стекла на самом контейнере */
-.modal-glass {
-  background: rgba(255, 255, 255, 0.18); /* полупрозрачный фон как запас */
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%); /* для Safari */
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-  /* менее заметная тень для глубины */
-  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.08);
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #3b82f6;
+  transition: width 0.3s ease;
 }
 
-/* iframe внутри обёртки — занимает всё пространство */
-.modal-iframe {
+.nav-link:hover::after {
   width: 100%;
-  height: 600px; /* можно менять */
-  border: none;
-  background: transparent; /* чтобы не закрывать стекло, если страница внутри прозрачна */
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 600px) {
-  .modal-iframe {
-    height: 90vh; /* подстраивается под высоту экрана */
-  }
-}
-
-
-.telegram-news {
-  text-align: center;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 50px;
-}
-
-/* Media Query for larger screens (e.g., tablets and desktops) */
-@media (min-width: 768px) {
-  .course-info-section {
-    text-align: left;
-
-    h1 {
-      font-size: 3rem;
-    }
-
-    &__subtitle {
-      
-    }
-  }
-
-  .course-program {
-    
-  }
-
-  .course-program__part {
-    width: 40%;
-    float: left;
-    margin-right: 50px;
-    
-
-    &-title {
-      font-size: 2rem;
-    }
-  }
-
-  .payment-button {
-    font-size: 1.2rem;
-  }
-
-  .payment-modal {
-    width: 50%;
-  }
-
-  .modal-iframe {
-    margin-top: 50px;
-    height: 750px;
-  }
-
-  .telegram-news {
-    text-align: right;
-    margin-right: 50px;
-    margin-top: 700px;
-  }
 }

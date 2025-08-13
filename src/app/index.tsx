@@ -13,7 +13,7 @@ import NavigationButtons from '../components/NavigationButtons';
 function App() {
   return (
     <div>
-      <NavigationButtons />
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="home" element={<HomePage />} />
