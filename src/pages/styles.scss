@@ -1,4 +1,4 @@
-@import '../../styles/_colors.scss';
+@import '../styles/_colors.scss';
 
 .home-page {
   &__background {
@@ -12,7 +12,7 @@
   margin-right: auto;
   max-width: 90%; // Occupy most of the screen width, but leave some margin
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
   
 
   h1 {
@@ -28,7 +28,6 @@
 }
 
 .course-program {
-  width: 95%; // Full width for mobile
   margin-right: auto;
   background-color: $color-3;
   border-radius: 10px;
@@ -143,8 +142,6 @@
 /* Media Query for larger screens (e.g., tablets and desktops) */
 @media (min-width: 768px) {
   .course-info-section {
-    margin-left: 100px;
-    margin-right: 0px;
     text-align: left;
 
     h1 {
@@ -152,20 +149,19 @@
     }
 
     &__subtitle {
-      margin-bottom: 100px;
+      
     }
   }
 
   .course-program {
-    width: 76%;
-    padding-left: 50px;
+    
   }
 
   .course-program__part {
     width: 40%;
     float: left;
     margin-right: 50px;
-    margin-top: 50px;
+    
 
     &-title {
       font-size: 2rem;

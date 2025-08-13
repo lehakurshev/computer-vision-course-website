@@ -31,3 +31,12 @@ async def get_yookassa_widget():
     html_content = html_content.replace("$$$confirmation_token$$$", payment.confirmation.confirmation_token)
 
     return Response(content=html_content, media_type="text/html")
+
+
+@app.get("/")
+async def home():
+    file_path = os.path.join(os.path.dirname(__file__), 'CVisionPro.html')
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+
+    return Response(content=html_content, media_type="text/html")
