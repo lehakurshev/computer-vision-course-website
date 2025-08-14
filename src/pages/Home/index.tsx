@@ -9,15 +9,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../styles.scss';
 
-interface Lesson {
-  title: string;
-  content: string[];
-}
-
-interface LessonSectionProps {
-  lesson: Lesson;
-}
-
 function HomePage() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 

@@ -3,8 +3,8 @@ FROM node:14
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci --legacy-peer-deps
+COPY ["package.json", "package-lock.json", "yarn.lock", "tsconfig.json", "./"]
+RUN npm install
 
 COPY . .
 ENV SERVER_HOST=${SERVER_HOST}
