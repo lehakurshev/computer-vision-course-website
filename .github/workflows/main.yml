@@ -31,7 +31,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
             cd ${{ env.PROJECT_PATH }};
             git fetch --all;
-            git reset --hard origin/main;
+            git reset --hard origin/deploy-1;
           "
 
           # Run Docker Compose
