@@ -40,5 +40,7 @@ jobs:
             export SERVER_HOST='${{ env.SERVER_HOST }}';
             export YOOKASSA_SHOP_ID='${{ env.YOOKASSA_SHOP_ID }}';
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
+            # Clean up unused Docker resources
+            docker system prune -f --volumes;
             docker-compose up --build -d
           "
