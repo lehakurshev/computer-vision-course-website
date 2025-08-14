@@ -492,8 +492,8 @@ function HomePage() {
       <section id="author" className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Об авторе курса</h2>
-          <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
-            <div className="w-full md:w-1/3 flex justify-center">
+          <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto">
+            <div className="flex justify-center">
               <div className="bg-gray-200 overflow-hidden shadow-lg">
                 <img src="https://urfu.ru/fileadmin/personal_pages/888b4af9a2ee4ae10c80788b289cc345.jpg"
                   alt="Author" className="w-full h-full object-cover" />
