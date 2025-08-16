@@ -32,6 +32,7 @@ async def get_yookassa_widget():
 
     return Response(content=html_content, media_type="text/html")
 
+
 @app.get("/confirmation-token")
 async def get_yookassa_widget():
     payment = Payment.create({
