@@ -51,11 +51,39 @@
       width: 100%;
     }
   </style>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-</body>
+  <script>
+        //Инициализация виджета. Все параметры обязательные.
+        const checkout = new window.YooMoneyCheckoutWidget({
+            confirmation_token: '$$$confirmation_token$$$', //Токен, который перед проведением оплаты нужно получить от ЮKassa
+            return_url: 'https://cvsourse.ru/', //Ссылка на страницу завершения оплаты, это может быть любая ваша страница
 
+            //При необходимости можно изменить цвета виджета, подробные настройки см. в документации
+            customization: {
+                //Настройка цветовой схемы, минимум один параметр, значения цветов в HEX
+                colors: {
+                    //Цвет акцентных элементов: кнопка Заплатить, выбранные переключатели, опции и текстовые поля
+                    control_primary: '#00BF96', //Значение цвета в HEX
+
+                    //Цвет платежной формы и ее элементов
+                    background: '#F2F3F5' //Значение цвета в HEX
+                }
+            },
+            error_callback: function (error) {
+                console.log(error)
+            }
+        });
+
+        //Отображение платежной формы в контейнере
+        checkout.render('payment-form');
+    </script>
+</body>
 </html>

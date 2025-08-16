@@ -32,11 +32,18 @@ async def get_yookassa_widget():
 
     return Response(content=html_content, media_type="text/html")
 
+@app.get("/confirmation-token")
+async def get_yookassa_widget():
+    payment = Payment.create({
+        "amount": {
+            "value": "2.00",
+            "currency": "RUB"
+        },
+        "confirmation": {
+            "type": "embedded"
+        },
+        "capture": False,
+        "description": "Заказ №72"
+    })
 
-@app.get("/")
-async def home():
-    file_path = os.path.join(os.path.dirname(__file__), 'CVisionPro.html')
-    with open(file_path, 'r', encoding='utf-8') as file:
-        html_content = file.read()
-
-    return Response(content=html_content, media_type="text/html")
+    return payment.confirmation.confirmation_token

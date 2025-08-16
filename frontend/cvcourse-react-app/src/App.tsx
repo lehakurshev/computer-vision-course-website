@@ -1,9 +1,32 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+interface YooMoneyCheckoutWidgetOptions {
+  confirmation_token: string;
+  return_url: string | undefined;
+  customization?: {
+    colors: {
+      control_primary?: string;
+      background?: string;
+    };
+  };
+  error_callback?: (error: any) => void;
+}
+
+interface YooMoneyCheckoutWidget {
+  render: (containerId: string) => void;
+}
+
+interface YooMoneyWindow extends Window {
+  YooMoneyCheckoutWidget?: new (options: YooMoneyCheckoutWidgetOptions) => YooMoneyCheckoutWidget;
+}
+
+declare const window: YooMoneyWindow;
+
 
 function App() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -15,6 +38,41 @@ function App() {
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
+
+  useEffect(() => {
+    // Проверяем, что YooMoneyCheckoutWidget доступен в window
+    if (typeof window.YooMoneyCheckoutWidget === 'undefined') {
+      console.error('YooMoneyCheckoutWidget is not available. Ensure the script is loaded.');
+      return;
+    }
+
+    const checkout = new window.YooMoneyCheckoutWidget({
+      confirmation_token: `${process.env.REACT_APP_SERVER_HOST}:8000/confirmation-token`, // Замените на реальный токен
+      return_url: process.env.REACT_APP_SERVER_HOST,
+
+      customization: {
+        colors: {
+          control_primary: '#1300bfff',
+          background: '#81a5eeff',
+        },
+      },
+      error_callback: (error) => {
+        console.log(error);
+      },
+    });
+
+    checkout.render('payment-form');
+    
+    return () => {
+      // Теоретически, YooMoneyCheckoutWidget может предоставлять метод для уничтожения виджета.
+      // Если такого метода нет, можно просто очистить контейнер.
+      const paymentFormContainer = document.getElementById('payment-form');
+      if (paymentFormContainer) {
+        paymentFormContainer.innerHTML = ''; // Очистка содержимого контейнера.
+      }
+    };
+
+  }, []);
 
   return (
     <div>
@@ -586,6 +644,8 @@ function App() {
                   </div>
                 </form>
               </div>
+
+              <div id="payment-form"></div>
             </div>
           </div>
         </div>
