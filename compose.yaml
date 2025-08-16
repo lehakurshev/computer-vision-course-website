@@ -13,7 +13,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8000:8000"
     environment:
       YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
