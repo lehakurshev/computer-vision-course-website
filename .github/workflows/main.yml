@@ -42,5 +42,6 @@ jobs:
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
             # Clean up unused Docker resources
             docker system prune -f --volumes;
+            docker-compose down --rmi all --volumes;
             docker-compose up --build -d
           "
