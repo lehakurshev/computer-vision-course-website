@@ -742,111 +742,111 @@ function App() {
               </div>
 
               <div className="md:w-1/2 p-8">
-              {showPaymentDiv ? (
-        <div id="payment-form" />
-      ) : (
-                <Box component="form" onSubmit={handleSubmit} noValidate className="space-y-4">
-                  <FormControl component="fieldset" required error={!!errors.consult}>
-                    <FormLabel component="legend">консультация</FormLabel>
-                    <RadioGroup
-                      aria-labelledby="demo-radio-buttons-group-label"
-                      value={consult}
-                      onChange={(e) => {
-                        const val = e.target.value
-                        setConsult(val)
-                        clearOrSetError('consult', val)
-                      }}
-                      name="radio-buttons-group"
-                    >
-                      <FormControlLabel value="assistant-20" control={<Radio />} label="Ассистент (20 мин / 400 руб)" />
-                      <FormControlLabel value="assistant-60" control={<Radio />} label="Ассистент (60 мин / 1000 руб)" />
-                      <FormControlLabel value="author-20" control={<Radio />} label="Автор курса (20 мин / 1000 руб)" />
-                    </RadioGroup>
-                    {errors.consult && <FormHelperText>{errors.consult}</FormHelperText>}
-                  </FormControl>
-
-                  <TextField
-                    fullWidth
-                    label="Фамилия"
-                    value={lastName}
-                    onChange={(e) => {
-                      const val = e.target.value
-                      setLastName(val)
-                      clearOrSetError('lastName', val)
-                    }}
-                    required
-                    error={!!errors.lastName}
-                    helperText={errors.lastName}
-                  />
-
-                  <TextField
-                    fullWidth
-                    label="Имя"
-                    value={firstName}
-                    onChange={(e) => {
-                      const val = e.target.value
-                      setFirstName(val)
-                      clearOrSetError('firstName', val)
-                    }}
-                    required
-                    error={!!errors.firstName}
-                    helperText={errors.firstName}
-                  />
-
-                  <Box display="flex" gap={2} mb={2}>
-                    <FormControl required error={!!errors.messengerType} sx={{ minWidth: 110 }}>
-                      <Select
-                        value={messengerType}
-                        onChange={(e: SelectChangeEvent<string>) => {
+                {showPaymentDiv ? (
+                  <div id="payment-form" />
+                ) : (
+                  <Box component="form" onSubmit={handleSubmit} noValidate className="space-y-4">
+                    <FormControl component="fieldset" required error={!!errors.consult}>
+                      <FormLabel component="legend">консультация</FormLabel>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        value={consult}
+                        onChange={(e) => {
                           const val = e.target.value
-                          setMessengerType(val)
-                          clearOrSetError('messengerType', val)
+                          setConsult(val)
+                          clearOrSetError('consult', val)
                         }}
-                        displayEmpty
-                        renderValue={(selected) => (selected as string) || '-'}
+                        name="radio-buttons-group"
                       >
-                        <MenuItem value="telegram">telegram</MenuItem>
-                        <MenuItem value="max">max</MenuItem>
-                      </Select>
-                      {errors.messengerType && <FormHelperText>{errors.messengerType}</FormHelperText>}
+                        <FormControlLabel value="assistant-20" control={<Radio />} label="Ассистент (20 мин / 400 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
+                        <FormControlLabel value="assistant-60" control={<Radio />} label="Ассистент (60 мин / 1000 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
+                        <FormControlLabel value="author-20" control={<Radio />} label="Автор курса (20 мин / 1000 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
+                      </RadioGroup>
+                      {errors.consult && <FormHelperText>{errors.consult}</FormHelperText>}
                     </FormControl>
 
                     <TextField
-                      label="Аккаунт мессенджера"
-                      value={messenger}
+                      fullWidth
+                      label="Фамилия"
+                      value={lastName}
                       onChange={(e) => {
                         const val = e.target.value
-                        setMessenger(val)
-                        clearOrSetError('messenger', val)
+                        setLastName(val)
+                        clearOrSetError('lastName', val)
                       }}
                       required
-                      error={!!errors.messenger}
-                      helperText={errors.messenger}
-                      fullWidth
+                      error={!!errors.lastName}
+                      helperText={errors.lastName}
                     />
-                  </Box>
 
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    value={email}
-                    onChange={(e) => {
-                      const val = e.target.value
-                      setEmail(val)
-                      clearOrSetError('email', val)
-                    }}
-                    required
-                    error={!!errors.email}
-                    helperText={errors.email}
-                  />
+                    <TextField
+                      fullWidth
+                      label="Имя"
+                      value={firstName}
+                      onChange={(e) => {
+                        const val = e.target.value
+                        setFirstName(val)
+                        clearOrSetError('firstName', val)
+                      }}
+                      required
+                      error={!!errors.firstName}
+                      helperText={errors.firstName}
+                    />
 
-                  <Box textAlign="center">
-                    <Button type="submit" variant="contained" color="primary">
-                      Оплатить
-                    </Button>
+                    <Box display="flex" gap={2} mb={2}>
+                      <FormControl required error={!!errors.messengerType} sx={{ minWidth: 110 }}>
+                        <Select
+                          value={messengerType}
+                          onChange={(e: SelectChangeEvent<string>) => {
+                            const val = e.target.value
+                            setMessengerType(val)
+                            clearOrSetError('messengerType', val)
+                          }}
+                          displayEmpty
+                          renderValue={(selected) => (selected as string) || '-'}
+                        >
+                          <MenuItem value="telegram">telegram</MenuItem>
+                          <MenuItem value="max">max</MenuItem>
+                        </Select>
+                        {errors.messengerType && <FormHelperText>{errors.messengerType}</FormHelperText>}
+                      </FormControl>
+
+                      <TextField
+                        label="Аккаунт мессенджера"
+                        value={messenger}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setMessenger(val)
+                          clearOrSetError('messenger', val)
+                        }}
+                        required
+                        error={!!errors.messenger}
+                        helperText={errors.messenger}
+                        fullWidth
+                      />
+                    </Box>
+
+                    <TextField
+                      fullWidth
+                      label="Email"
+                      value={email}
+                      onChange={(e) => {
+                        const val = e.target.value
+                        setEmail(val)
+                        clearOrSetError('email', val)
+                      }}
+                      required
+                      error={!!errors.email}
+                      helperText={errors.email}
+                    />
+
+                    <Box textAlign="center">
+                      <Button type="submit" variant="contained" color="primary">
+                        Оплатить
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
-      )}
+                )}
 
 
                 <div id="payment-form" className="hidden mt-6 p-4 border border-gray-200 rounded-lg">
