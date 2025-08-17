@@ -27,6 +27,7 @@ services:
     environment:
       YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
+      SERVER_HOST: ${SERVER_HOST}
 
 #networks:
 #  default:
