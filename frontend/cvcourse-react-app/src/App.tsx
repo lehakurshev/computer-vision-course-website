@@ -48,7 +48,7 @@ function App() {
 
     const fetchConfirmationToken = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
+        const response = await fetch(`http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
         const data = response.json
 
         if (!response.ok) {
