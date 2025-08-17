@@ -4,6 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import axios from 'axios';
 
 interface YooMoneyCheckoutWidgetOptions {
   confirmation_token: string;
@@ -48,14 +49,14 @@ function App() {
 
     const fetchConfirmationToken = async () => {
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
-        const data = response.json
+        const response = await axios.get(`http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
+        const data = response.data
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // if (response.status) {
+        //   throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
 
-        const token = await data; // Get the token as text
+        const token = data; // Get the token as text
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
