@@ -6,11 +6,11 @@ services:
       context: ./frontend/cvcourse-react-app
       dockerfile: Dockerfile
       args:
-        SERVER_HOST: ${SERVER_HOST}
+        VITE_SERVER_HOST: ${SERVER_HOST}
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
     environment:
-      SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
+      VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
     depends_on:
       - backend  # Frontend зависит от backend'a
     restart: always # Автоматический перезапуск при сбое
