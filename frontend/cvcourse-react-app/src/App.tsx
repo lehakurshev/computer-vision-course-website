@@ -49,12 +49,13 @@ function App() {
     const fetchConfirmationToken = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
+        const data = response.json
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const token = await response.text(); // Get the token as text
+        const token = await data; // Get the token as text
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
