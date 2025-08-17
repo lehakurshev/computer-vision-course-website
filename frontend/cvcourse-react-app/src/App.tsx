@@ -749,13 +749,14 @@ function App() {
                   <FormControl component="fieldset" required error={!!errors.consult}>
                     <FormLabel component="legend">консультация</FormLabel>
                     <RadioGroup
+                      aria-labelledby="demo-radio-buttons-group-label"
                       value={consult}
                       onChange={(e) => {
                         const val = e.target.value
                         setConsult(val)
                         clearOrSetError('consult', val)
                       }}
-                      name="consult"
+                      name="radio-buttons-group"
                     >
                       <FormControlLabel value="assistant-20" control={<Radio />} label="Ассистент (20 мин / 400 руб)" />
                       <FormControlLabel value="assistant-60" control={<Radio />} label="Ассистент (60 мин / 1000 руб)" />
