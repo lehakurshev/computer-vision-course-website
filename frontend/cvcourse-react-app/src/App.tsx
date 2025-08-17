@@ -41,28 +41,44 @@ function App() {
 
   useEffect(() => {
     // Проверяем, что YooMoneyCheckoutWidget доступен в window
-    if (typeof window.YooMoneyCheckoutWidget === 'undefined') {
+    if (typeof (window as any).YooMoneyCheckoutWidget === 'undefined') {
       console.error('YooMoneyCheckoutWidget is not available. Ensure the script is loaded.');
       return;
     }
 
-    const checkout = new window.YooMoneyCheckoutWidget({
-      confirmation_token: `${process.env.REACT_APP_SERVER_HOST}:8000/confirmation-token`, // Замените на реальный токен
-      return_url: process.env.REACT_APP_SERVER_HOST,
+    const fetchConfirmationToken = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}:8000/confirmation-token`);
 
-      customization: {
-        colors: {
-          control_primary: '#1300bfff',
-          background: '#81a5eeff',
-        },
-      },
-      error_callback: (error) => {
-        console.log(error);
-      },
-    });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-    checkout.render('payment-form');
-    
+        const token = await response.text(); // Get the token as text
+
+        const checkout = new (window as any).YooMoneyCheckoutWidget({
+          confirmation_token: token, // Use the fetched token
+          return_url: process.env.REACT_APP_SERVER_HOST,
+
+          customization: {
+            colors: {
+              control_primary: '#1300bfff',
+              background: '#81a5eeff',
+            },
+          },
+          error_callback: (error: any) => {
+            console.error("YooMoney Checkout Widget Error:", error);
+          },
+        });
+
+        checkout.render('payment-form');
+      } catch (error: any) {
+        console.error("Error fetching or initializing YooMoney Checkout Widget:", error);
+      }
+    };
+
+    fetchConfirmationToken();
+
     return () => {
       // Теоретически, YooMoneyCheckoutWidget может предоставлять метод для уничтожения виджета.
       // Если такого метода нет, можно просто очистить контейнер.
@@ -73,6 +89,7 @@ function App() {
     };
 
   }, []);
+
 
   return (
     <div>
