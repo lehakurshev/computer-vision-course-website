@@ -31,20 +31,3 @@ async def get_yookassa_widget():
     html_content = html_content.replace("$$$confirmation_token$$$", payment.confirmation.confirmation_token)
 
     return Response(content=html_content, media_type="text/html")
-
-
-@app.get("/confirmation-token")
-async def get_yookassa_widget():
-    payment = Payment.create({
-        "amount": {
-            "value": "2.00",
-            "currency": "RUB"
-        },
-        "confirmation": {
-            "type": "embedded"
-        },
-        "capture": False,
-        "description": "Заказ №72"
-    })
-
-    return payment.confirmation.confirmation_token
