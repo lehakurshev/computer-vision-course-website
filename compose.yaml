@@ -23,11 +23,10 @@ services:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"  # Бэкенд слушает порт 8000
+      - "8000:8000"
     environment:
-      YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}  # ID магазина ЮKassa
-      YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}  # Секретный ключ магазина ЮKassa
-    restart: always  # Автоматический перезапуск при сбое
+      YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
+      YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
 
 #networks:
 #  default:
