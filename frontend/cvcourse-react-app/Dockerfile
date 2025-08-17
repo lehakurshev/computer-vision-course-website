@@ -7,7 +7,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN REACT_APP_SERVER_HOST=${SERVER_HOST} npm run build
+ARG SERVER_HOST
+ENV REACT_APP_SERVER_HOST=${SERVER_HOST}
+RUN npm run build
 
 # --- Этап 2: Подача статических файлов с Nginx ---
 FROM nginx:stable-alpine
