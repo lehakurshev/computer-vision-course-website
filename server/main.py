@@ -10,9 +10,7 @@ app = FastAPI()
 
 origins = [
     # os.getenv('SERVER_HOST'),
-    "http://158.160.102.186",
     "http://158.160.102.186:80",
-    "http://158.160.102.186:9000"
 ]
 
 app.add_middleware(
