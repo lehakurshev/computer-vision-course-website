@@ -48,7 +48,7 @@ function App() {
 
     const fetchConfirmationToken = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}:8000/confirmation-token`);
+        const response = await fetch(`${process.env.SERVER_HOST}:8000/confirmation-token`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -58,7 +58,7 @@ function App() {
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
-          return_url: process.env.REACT_APP_SERVER_HOST,
+          return_url: process.env.SERVER_HOST,
 
           customization: {
             colors: {

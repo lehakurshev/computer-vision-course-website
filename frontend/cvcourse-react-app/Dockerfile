@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 ARG SERVER_HOST
-ENV REACT_APP_SERVER_HOST=${SERVER_HOST}
+ENV SERVER_HOST=${SERVER_HOST}
 RUN npm run build
 
 # --- Этап 2: Подача статических файлов с Nginx ---
