@@ -9,7 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    os.getenv('SERVER_HOST'),
+    # os.getenv('SERVER_HOST'),
+    'http://158.160.102.186/'
 ]
 
 app.add_middleware(
