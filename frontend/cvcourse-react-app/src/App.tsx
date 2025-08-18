@@ -313,7 +313,7 @@ function App() {
           <div className="mb-16 bg-white rounded-xl shadow-md overflow-hidden">
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-semibold text-white">Часть 1</h3>
+                <h3 className="text-2xl font-semibold text-blue-600">Часть 1</h3>
                 <a href="#"
                   className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white active:text-white px-6 py-2 rounded-lg font-medium transition duration-300">
                   Смотреть на Stepik <i className="fas fa-external-link-alt ml-2"></i>
@@ -539,7 +539,7 @@ function App() {
           <div className="bg-white rounded-xl shadow-md overflow-hidden">
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-semibold text-white">Часть 1</h3>
+                <h3 className="text-2xl font-semibold text-blue-600">Часть 2</h3>
                 <a href="#"
                   className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white active:text-white px-6 py-2 rounded-lg font-medium transition duration-300">
                   Смотреть на Stepik <i className="fas fa-external-link-alt ml-2"></i>
