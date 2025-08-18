@@ -37,6 +37,5 @@ services:
       - frontend  # Зависит от сборки frontend
     restart: always # Автоматический перезапуск при сбое
 
-#networks:
-#  default:
-#    driver: bridge
+volumes:
+  app_dist: {}  # Объявляем именованный том
