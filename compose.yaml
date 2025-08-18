@@ -34,9 +34,8 @@ services:
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
       SERVER_HOST: ${SERVER_HOST}
     volumes:
-      - db_data:/app/descriptions.json
+      - ./db_data:/app/descriptions.json
 
 
 volumes:
   app_dist: {}  # Объявляем именованный том
-  db_data:
