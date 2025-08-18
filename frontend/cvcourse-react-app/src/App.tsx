@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -127,6 +127,7 @@ function App() {
       console.log('Отправка данных', payload)
       // Реальная отправка / оплата
       setShowPaymentDiv(true)
+      sendingData()
     }
   }
 
@@ -141,13 +142,13 @@ function App() {
     })
   }
 
-  useEffect(() => {
-    if (!showPaymentDiv) return
-    // Инициализация внешнего платежного виджета внутри <div id="payment-form"></div>
-    // const el = document.getElementById('payment-form')
-    // if (el) externalPaymentSDK.init({ mount: el, ... })
-    console.log('Инициализация платежного блока: #payment-form')
-  }, [showPaymentDiv])
+  // useEffect(() => {
+  //   if (!showPaymentDiv) return
+  //   // Инициализация внешнего платежного виджета внутри <div id="payment-form"></div>
+  //   // const el = document.getElementById('payment-form')
+  //   // if (el) externalPaymentSDK.init({ mount: el, ... })
+  //   console.log('Инициализация платежного блока: #payment-form')
+  // }, [showPaymentDiv])
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,7 +163,7 @@ function App() {
     setMobileMenuOpen(false);
   };
 
-  useEffect(() => {
+  const sendingData = () => {
     // Проверяем, что YooMoneyCheckoutWidget доступен в window
     if (typeof (window as any).YooMoneyCheckoutWidget === 'undefined') {
       console.error('YooMoneyCheckoutWidget is not available. Ensure the script is loaded.');
@@ -212,7 +213,7 @@ function App() {
       }
     };
 
-  }, []);
+  };
 
 
   return (
