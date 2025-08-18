@@ -31,6 +31,20 @@ services:
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
       SERVER_HOST: ${SERVER_HOST}
 
+  nginx:
+    build:
+      context: ./frontend/cvcourse-react-app  # Указываем путь к контексту сборки (где находится папка nginx)
+      dockerfile: Dockerfile.nginx # Указываем на новый Dockerfile для nginx
+    ports:
+      - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
+    volumes:
+      - app_dist:/usr/share/nginx/html # Монтируем именованный том в место где Nginx будет раздавать статику
+    environment:
+      VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
+    depends_on:
+      - frontend  # Зависит от сборки frontend
+    restart: always # Автоматический перезапуск при сбое
+
 #networks:
 #  default:
 #    driver: bridge
