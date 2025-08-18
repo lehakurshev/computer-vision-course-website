@@ -68,7 +68,7 @@ async def get_confirmation_token(form_values: FormValues = Body(...)):
             "type": "embedded"
         },
         "capture": False,
-        "description": f"http://{os.getenv('SERVER_HOST')}/{unique_id}"
+        "description": f"http://{os.getenv('SERVER_HOST')}/description/{unique_id}"
     })
 
     return payment.confirmation.confirmation_token
