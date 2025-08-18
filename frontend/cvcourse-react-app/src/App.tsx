@@ -747,7 +747,9 @@ function App() {
 
 
               {showPaymentDiv ? (
-                <div id="payment-form" />
+                <div className="container-payment-form">
+                  <div id="payment-form" />
+                </div>
               ) : (
                 <div className="w-full md:w-1/2 px-4 md:px-8 py-8">
                   <Box component="form" onSubmit={handleSubmit} noValidate className="space-y-4">
