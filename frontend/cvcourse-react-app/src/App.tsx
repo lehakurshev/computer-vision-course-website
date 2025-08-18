@@ -173,9 +173,9 @@ function App() {
     const fetchConfirmationToken = async () => {
       try {
         const response = await axios.post(
-                `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`,
-                formValues
-            );
+          `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`,
+          formValues
+        );
         const data = response.data
 
         // if (response.status) {
@@ -745,10 +745,11 @@ function App() {
                 </div>
               </div>
 
-              <div className="w-full md:w-1/2 px-4 md:px-8 py-8">
-                {showPaymentDiv ? (
-                  <div id="payment-form" className="hidden mt-6 p-4 border border-gray-200 rounded-lg"/>
-                ) : (
+
+              {showPaymentDiv ? (
+                <div id="payment-form" />
+              ) : (
+                <div className="w-full md:w-1/2 px-4 md:px-8 py-8">
                   <Box component="form" onSubmit={handleSubmit} noValidate className="space-y-4">
                     <FormControl component="fieldset" required error={!!errors.consult}>
                       <FormLabel component="legend">консультация</FormLabel>
@@ -850,12 +851,8 @@ function App() {
                       </Button>
                     </Box>
                   </Box>
-                )}
-
-
-                <div id="payment-form" className="hidden mt-6 p-4 border border-gray-200 rounded-lg">
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
