@@ -277,7 +277,7 @@ function App() {
             <a href="#program"
               className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition duration-300">Программа</a>
             <a href="#consultation"
-              className="border-2 border-white hover:bg-white text-white hover:text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg transition duration-300">Консультация</a>
+              className="border-2 border-white hover:bg-white text-white hover:text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg transition duration-300">Материалы</a>
           </div>
         </div>
       </section>
@@ -903,9 +903,9 @@ function App() {
               <h4 className="font-semibold mb-4">Ресурсы</h4>
               <ul className="space-y-2">
                 <li><a href="#" className="text-gray-400 hover:text-white transition">Блог</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Документация</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Сообщество</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Частые вопросы</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Оферта</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Политика конфиденциальности</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Согласие на обработку персональных данных</a></li>
               </ul>
             </div>
             <div>
@@ -920,8 +920,8 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 cvcourse.ru Все права защищены.</p>
-          </div>
+                <p>&copy; 22025 cvcourse.ru Все права защищены.<br/>ИП Дунаева Александра Валерьевна<br/>ИНН 668500174244</p>
+            </div>
         </div>
       </footer>
     </div>
