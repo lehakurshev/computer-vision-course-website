@@ -16,7 +16,8 @@ import {
   Select,
   MenuItem,
   Button,
-  FormHelperText
+  FormHelperText,
+  Checkbox
 } from '@mui/material'
 
 import { type SelectChangeEvent } from '@mui/material/Select';
@@ -51,6 +52,7 @@ interface FormValues {
   messengerType: string
   messenger: string
   email: string
+  consent: boolean;
 }
 
 type Errors = Partial<Record<keyof FormValues, string>>
@@ -77,6 +79,9 @@ const validateField = (name: keyof FormValues, value: string): string | undefine
       if (!v) return 'Введите email'
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Неверный формат email'
       return undefined
+    case 'consent':
+      if (v !== 'true') return 'Необходимо дать согласие на обработку персональных данных';
+      return undefined;
     default:
       return undefined
   }
@@ -90,6 +95,7 @@ function App() {
   const [messenger, setMessenger] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [errors, setErrors] = useState<Errors>({})
+  const [consent, setConsent] = useState<boolean>(false)
 
   // Стейт для показа блока платежа вместо формы
   const [showPaymentDiv, setShowPaymentDiv] = useState<boolean>(false)
@@ -102,9 +108,10 @@ function App() {
         firstName,
         messengerType,
         messenger,
-        email
+        email,
+        consent
       }) as (keyof FormValues)[]).forEach((key) => {
-        const val = { consult, lastName, firstName, messengerType, messenger, email }[key]
+        const val = { consult, lastName, firstName, messengerType, messenger, email, consent }[key]
         const err = validateField(key, String(val))
         if (err) e[key] = err
       })
@@ -122,7 +129,8 @@ function App() {
         firstName,
         messengerType,
         messenger,
-        email
+        email,
+        consent
       }
       console.log('Отправка данных', payload)
       // Реальная отправка / оплата
@@ -846,7 +854,23 @@ function App() {
                       error={!!errors.email}
                       helperText={errors.email}
                     />
-
+                    <FormControl component="fieldset" required error={!!errors.consent}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={consent}
+                            onChange={(event) => {setConsent(event.target.checked); }}
+                            name="consent"
+                          />
+                        }
+                        label={
+                          <Typography variant="caption">
+                            Согласие на обработку своих персональных данных
+                          </Typography>
+                        }
+                      />
+                      {errors.consent && <FormHelperText>{errors.consent}</FormHelperText>}
+                    </FormControl>
                     <Box textAlign="center">
                       <Button type="submit" variant="contained" color="primary">
                         Оплатить
@@ -867,22 +891,21 @@ function App() {
               <h3 className="text-xl font-semibold mb-4">cvcourse<span className="text-blue-400">.ru</span></h3>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <h4 className="font-semibold mb-4">Быстрые ссылки</h4>
               <ul className="space-y-2">
-                <li><a href="#home" className="text-gray-400 hover:text-white transition">Home</a></li>
-                <li><a href="#program" className="text-gray-400 hover:text-white transition">Course Program</a></li>
-                <li><a href="#author" className="text-gray-400 hover:text-white transition">Author</a></li>
-                <li><a href="#consultation" className="text-gray-400 hover:text-white transition">Consultation</a>
-                </li>
+                <li><a href="#home" className="text-gray-400 hover:text-white transition">Главная</a></li>
+                <li><a href="#program" className="text-gray-400 hover:text-white transition">Программа курса</a></li>
+                <li><a href="#author" className="text-gray-400 hover:text-white transition">Об авторе</a></li>
+                <li><a href="#consultation" className="text-gray-400 hover:text-white transition">Получить консультацию</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="font-semibold mb-4">Ресурсы</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Documentation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Community</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">FAQ</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Блог</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Документация</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Сообщество</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition">Частые вопросы</a></li>
               </ul>
             </div>
             <div>
@@ -897,7 +920,7 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 cvcourse.ur All rights reserved.</p>
+            <p>&copy; 2025 cvcourse.ru Все права защищены.</p>
           </div>
         </div>
       </footer>
