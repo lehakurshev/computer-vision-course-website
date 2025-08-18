@@ -25,7 +25,7 @@ app.add_middleware(
 Configuration.configure(os.getenv('YOOKASSA_SHOP_ID'), os.getenv('YOOKASSA_SHOP_SECRET'))
 
 # Настройка базы данных TinyDB
-db = TinyDB('descriptions.json')
+db = TinyDB('/app/db_data/descriptions.json')
 Description = Query()
 
 CONSULTATION_TYPE_MAPPING = {
