@@ -853,8 +853,8 @@ function App() {
                 )}
 
 
-                {/* <div id="payment-form" className="hidden mt-6 p-4 border border-gray-200 rounded-lg">
-                </div> */}
+                <div id="payment-form" className="hidden mt-6 p-4 border border-gray-200 rounded-lg">
+                </div>
               </div>
             </div>
           </div>
