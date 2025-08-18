@@ -10,9 +10,11 @@ from pydantic import BaseModel
 app = FastAPI()
 
 origins = [
-    f"http://{os.getenv('SERVER_HOST')}",
+    f"http://{os.getenv('SERVER_HOST')}"
 ]
-
+print(f"==============================")
+print(f"http://{os.getenv('SERVER_HOST')}")
+print(f"==============================")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
