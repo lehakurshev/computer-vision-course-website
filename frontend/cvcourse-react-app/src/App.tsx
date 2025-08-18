@@ -127,7 +127,7 @@ function App() {
       console.log('Отправка данных', payload)
       // Реальная отправка / оплата
       setShowPaymentDiv(true)
-      sendingData()
+      sendingData(payload)
     }
   }
 
@@ -163,7 +163,7 @@ function App() {
     setMobileMenuOpen(false);
   };
 
-  const sendingData = () => {
+  const sendingData = async (formValues: FormValues) => {
     // Проверяем, что YooMoneyCheckoutWidget доступен в window
     if (typeof (window as any).YooMoneyCheckoutWidget === 'undefined') {
       console.error('YooMoneyCheckoutWidget is not available. Ensure the script is loaded.');
@@ -172,7 +172,10 @@ function App() {
 
     const fetchConfirmationToken = async () => {
       try {
-        const response = await axios.get(`http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`);
+        const response = await axios.post(
+                `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`,
+                formValues
+            );
         const data = response.data
 
         // if (response.status) {

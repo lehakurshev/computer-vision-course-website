@@ -2,15 +2,15 @@ from yookassa import Refund
 from yookassa import Configuration
 from yookassa import Payment
 import uuid
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, HTTPException, Body
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
 origins = [
-    # os.getenv('SERVER_HOST'),
-    "http://158.160.102.186",
+    f"http://{os.getenv('SERVER_HOST')}",
 ]
 
 app.add_middleware(
@@ -23,6 +23,48 @@ app.add_middleware(
 
 Configuration.configure(os.getenv('YOOKASSA_SHOP_ID'), os.getenv('YOOKASSA_SHOP_SECRET'))
 
+CONSULTATION_TYPE_MAPPING = {
+    "assistant-20": "400.00",
+    "assistant-60": "1000.00",
+    "author-20": "1000.00",
+    
+}
+
+class FormValues(BaseModel):
+    consult: str
+    lastName: str
+    firstName: str
+    messengerType: str
+    messenger: str
+    email: str
+
+@app.post("/confirmation-token")
+async def get_confirmation_token(form_values: FormValues = Body(...)):
+    value = CONSULTATION_TYPE_MAPPING.get(form_values.consult)
+
+    if value is None:
+        # Если consultation_type не найден в словаре, возвращаем ошибку HTTP 400
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid consultation_type: '{form_values.consult}'.  Valid types are: {', '.join(CONSULTATION_TYPE_MAPPING.keys())}"
+        )
+
+    payment = Payment.create({
+        "amount": {
+            "value": value,
+            "currency": "RUB"
+        },
+        "confirmation": {
+            "type": "embedded"
+        },
+        "capture": False,
+        "description": form_values
+    })
+
+    return payment.confirmation.confirmation_token
+
+
+# 
 @app.get("/get-yookassa-widget")
 async def get_yookassa_widget():
     payment = Payment.create({
@@ -46,19 +88,3 @@ async def get_yookassa_widget():
     html_content = html_content.replace("$$$confirmation_token$$$", payment.confirmation.confirmation_token)
 
     return Response(content=html_content, media_type="text/html")
-
-@app.get("/confirmation-token")
-async def get_yookassa_widget():
-    payment = Payment.create({
-        "amount": {
-            "value": "2.00",
-            "currency": "RUB"
-        },
-        "confirmation": {
-            "type": "embedded"
-        },
-        "capture": False,
-        "description": "Заказ №72"
-    })
-
-    return payment.confirmation.confirmation_token
