@@ -10,7 +10,8 @@ from pydantic import BaseModel
 app = FastAPI()
 
 origins = [
-    f"http://{os.getenv('SERVER_HOST')}"
+    f"http://{os.getenv('SERVER_HOST')}",
+    f"http://{os.getenv('SERVER_HOST')}:80"
 ]
 print(f"==============================")
 print(f"http://{os.getenv('SERVER_HOST')}")
@@ -29,7 +30,6 @@ CONSULTATION_TYPE_MAPPING = {
     "assistant-20": "400.00",
     "assistant-60": "1000.00",
     "author-20": "1000.00",
-    
 }
 
 class FormValues(BaseModel):
@@ -60,7 +60,7 @@ async def get_confirmation_token(form_values: FormValues = Body(...)):
             "type": "embedded"
         },
         "capture": False,
-        "description": form_values
+        "description": str(form_values)
     })
 
     return payment.confirmation.confirmation_token
