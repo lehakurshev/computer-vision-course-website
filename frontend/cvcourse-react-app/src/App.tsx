@@ -173,7 +173,7 @@ function App() {
     const fetchConfirmationToken = async () => {
       try {
         const response = await axios.post(
-                `http://${import.meta.env.VITE_SERVER_HOST}/server/confirmation-token`,
+                `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`,
                 formValues
             );
         const data = response.data
