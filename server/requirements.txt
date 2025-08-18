@@ -1,3 +1,4 @@
 yookassa
 fastapi[standard]
 uvicorn
+tinydb
