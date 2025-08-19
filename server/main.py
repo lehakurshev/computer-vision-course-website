@@ -117,7 +117,7 @@ async def get_payments():
     while True:
         try:
             payments = Payment.list({"limit": 100, "cursor": cursor})
-            all_payments.extend(payments.items[0])
+            all_payments.extend(payments.items)
 
             # Если есть следующий курсор, продолжаем запросы
             if not payments.next_cursor:
