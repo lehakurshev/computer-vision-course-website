@@ -5,6 +5,7 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from tinydb import TinyDB, Query
+from typing import List, Dict, Any
 
 app = FastAPI()
 
@@ -82,6 +83,38 @@ async def get_description(id: str):
         raise HTTPException(status_code=404, detail="Description not found")
 
     return result[0]['description']
+
+@app.get("/payments")
+async def get_all_payments() -> List[Dict[str, Any]]:  # Explicit return type
+    """
+    Retrieves all payments from YooKassa, handling pagination.
+    """
+    all_payments: List[Dict[str, Any]] = []  # Use List[Dict[str, Any]] for clarity
+    cursor = None
+
+    try:
+        while True:
+            payments_page = Payment.list(
+                {
+                    "limit": 100,  # Use the maximum allowed limit
+                    "cursor": cursor,
+                }
+            )
+
+            if payments_page.items:
+                all_payments.extend(payments_page.items)  # Extend with the list of payments
+            else:
+                break  # No more payments
+
+            if payments_page.next_cursor:
+                cursor = payments_page.next_cursor
+            else:
+                break  # No more pages
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return all_payments
 
 # 
 @app.get("/get-yookassa-widget")
