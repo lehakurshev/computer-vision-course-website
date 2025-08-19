@@ -106,7 +106,7 @@ async def get_paid_payments():
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    return {"type": "list", "items": secure_payments}
+    return secure_payments
 
 
 @app.get("/all-payments")
