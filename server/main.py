@@ -84,7 +84,32 @@ async def get_description(id: str):
 
     return result[0]['description']
 
-@app.get("/payments")
+
+@app.get("/paid-payments")
+async def get_paid_payments():
+    secure_payments = []
+    cursor = None
+
+    while True:
+        try:
+            payments = Payment.list({"limit": 100, "cursor": cursor})
+            # Фильтруем платежи по условию paid == true
+            for payment in payments.items:
+                if hasattr(payment, 'paid') and payment.paid:
+                    secure_payments.append({"description": payment.description})
+
+            # Если есть следующий курсор, продолжаем запросы
+            if not payments.next_cursor:
+                break
+            cursor = payments.next_cursor
+
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    return {"type": "list", "items": secure_payments}
+
+
+@app.get("/all-payments")
 async def get_payments():
     all_payments = []
     cursor = None
@@ -92,7 +117,7 @@ async def get_payments():
     while True:
         try:
             payments = Payment.list({"limit": 100, "cursor": cursor})
-            all_payments.extend(payments.items)
+            all_payments.extend(payments.items[0])
 
             # Если есть следующий курсор, продолжаем запросы
             if not payments.next_cursor:
@@ -104,6 +129,7 @@ async def get_payments():
 
     return {"type": "list", "items": all_payments}
     
+
 
 # 
 @app.get("/get-yookassa-widget")
