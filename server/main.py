@@ -85,36 +85,17 @@ async def get_description(id: str):
     return result[0]['description']
 
 @app.get("/payments")
-async def get_all_payments() -> List[Dict[str, Any]]:  # Explicit return type
-    """
-    Retrieves all payments from YooKassa, handling pagination.
-    """
-    all_payments: List[Dict[str, Any]] = []  # Use List[Dict[str, Any]] for clarity
-    cursor = None
-
+async def get_payments(limit: int = 100, cursor: str = None):
     try:
-        while True:
-            payments_page = Payment.list(
-                {
-                    "limit": 100,  # Use the maximum allowed limit
-                    "cursor": cursor,
-                }
-            )
-
-            if payments_page.items:
-                all_payments.extend(payments_page.items)  # Extend with the list of payments
-            else:
-                break  # No more payments
-
-            if payments_page.next_cursor:
-                cursor = payments_page.next_cursor
-            else:
-                break  # No more pages
-
+        payments = Payment.list(
+            {
+                "limit": limit,
+                "cursor": cursor
+            }
+        )
+        return payments
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-    return all_payments
 
 # 
 @app.get("/get-yookassa-widget")
