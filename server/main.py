@@ -85,17 +85,25 @@ async def get_description(id: str):
     return result[0]['description']
 
 @app.get("/payments")
-async def get_payments(limit: int = 100, cursor: str = None):
-    try:
-        payments = Payment.list(
-            {
-                "limit": limit,
-                "cursor": cursor
-            }
-        )
-        return payments
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+async def get_payments():
+    all_payments = []
+    cursor = None
+
+    while True:
+        try:
+            payments = Payment.list({"limit": 100, "cursor": cursor})
+            all_payments.extend(payments.items)
+
+            # Если есть следующий курсор, продолжаем запросы
+            if not payments.next_cursor:
+                break
+            cursor = payments.next_cursor
+
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    return {"type": "list", "items": all_payments}
+    
 
 # 
 @app.get("/get-yookassa-widget")
