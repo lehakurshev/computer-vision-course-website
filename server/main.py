@@ -7,6 +7,9 @@ from pydantic import BaseModel
 from tinydb import TinyDB, Query
 from typing import List, Dict, Any
 
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
 app = FastAPI()
 
 # Настройка CORS
@@ -107,6 +110,34 @@ async def get_paid_payments():
             raise HTTPException(status_code=500, detail=str(e))
 
     return secure_payments
+
+
+def get_google_sheet(sheet_name: str):
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/service-account-file.json', scope)
+    client = gspread.authorize(creds)
+    
+    # Открываем таблицу по имени
+    sheet = client.open(sheet_name).sheet1  # Можно изменить на нужный лист
+    return sheet
+
+@app.post("/save-description-to-sheet/{id}")
+async def save_description_to_sheet(id: str):
+    # Получение описания по уникальному идентификатору
+    result = db.search(Description.id == id)
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Description not found")
+    
+    description = result[0]['description']
+    
+    # Запись описания в Google Таблицу
+    sheet = get_google_sheet("Your Google Sheet Name")
+    
+    # Добавляем новую строку с описанием
+    sheet.append_row([id, description])  # Здесь вы можете изменить, какие данные хотите записать
+    
+    return {"message": "Description saved to Google Sheet", "id": id}
 
 
 @app.get("/all-payments")

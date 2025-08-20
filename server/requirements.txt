@@ -2,3 +2,5 @@ yookassa
 fastapi[standard]
 uvicorn
 tinydb
+gspread
+oauth2client
