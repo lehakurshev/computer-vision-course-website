@@ -118,6 +118,7 @@ def get_google_sheet(sheet_name: str):
     
     # Получаем JSON-строку из переменной окружения
     json_str = os.getenv('GOOGLE_SHEET_CREDENTIALS')  # Замените на имя вашей переменной окружения
+    print(json_str)
     
     # Загружаем данные из строки JSON
     creds_dict = json.loads(json_str)
