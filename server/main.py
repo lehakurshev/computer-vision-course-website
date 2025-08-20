@@ -121,6 +121,8 @@ def fix_json_like_string(input_string: str) -> str:
 
     json_string = json_string.replace(",", "\",")
 
+
+    json_string = json_string.replace("\n}", "\n}")
     return json_string
 
 
