@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from tinydb import TinyDB, Query
 from typing import List, Dict, Any
+import re
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -112,12 +113,22 @@ async def get_paid_payments():
 
     return secure_payments
 
+def fix_json_like_string(input_string: str) -> str:
+
+    json_string = re.sub(r"(\w+):", r'"\1":', input_string)
+
+    json_string = re.sub(r":\s*(\w+)", r': "\1"', json_string)
+
+    return json_string
+
 
 def get_google_sheet(sheet_name: str):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     
     # Получаем JSON-строку из переменной окружения
     json_str = os.getenv('GOOGLE_SHEET_CREDENTIALS')  # Замените на имя вашей переменной окружения
+    print(json_str)
+    json_str = fix_json_like_string(json_str)
     print(json_str)
     
     # Загружаем данные из строки JSON
