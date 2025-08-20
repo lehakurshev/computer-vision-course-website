@@ -8,6 +8,7 @@ env:
   SERVER_USER: ${{ secrets.HOST_USER_NAME }}
   YOOKASSA_SHOP_ID: ${{ secrets.YOOKASSA_SHOP_ID }}
   YOOKASSA_SHOP_SECRET: ${{ secrets.YOOKASSA_SHOP_SECRET }}
+  GOOGLE_SHEET_CREDENTIALS: ${{ secrets.GOOGLE_SHEET_CREDENTIALS }}
   PROJECT_PATH: /home/lehakurshev/computer-vision-course-website
 
 jobs:
@@ -40,6 +41,7 @@ jobs:
             export SERVER_HOST='${{ env.SERVER_HOST }}';
             export YOOKASSA_SHOP_ID='${{ env.YOOKASSA_SHOP_ID }}';
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
+            export GOOGLE_SHEET_CREDENTIALS='${{ env.GOOGLE_SHEET_CREDENTIALS }}'
             # Clean up unused Docker resources
             docker system prune -f --volumes;
             docker-compose down --rmi all --volumes;

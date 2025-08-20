@@ -33,6 +33,7 @@ services:
       YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
       SERVER_HOST: ${SERVER_HOST}
+      GOOGLE_SHEET_CREDENTIALS: ${GOOGLE_SHEET_CREDENTIALS}
     volumes:
       - ./db_data:/app/db_data
 

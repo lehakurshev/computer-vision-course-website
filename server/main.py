@@ -2,6 +2,7 @@ from yookassa import Refund, Configuration, Payment
 import uuid
 from fastapi import FastAPI, Response, HTTPException, Body
 import os
+import json
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from tinydb import TinyDB, Query
@@ -46,7 +47,7 @@ class FormValues(BaseModel):
     messenger: str
     email: str
 
-@app.post("/confirmation-token")
+@app.post("/confirmation-token-and-description-id")
 async def get_confirmation_token(form_values: FormValues = Body(...)):
     value = CONSULTATION_TYPE_MAPPING.get(form_values.consult)
 
@@ -75,7 +76,7 @@ async def get_confirmation_token(form_values: FormValues = Body(...)):
         "description": f"{unique_id}"
     })
 
-    return payment.confirmation.confirmation_token
+    return (payment.confirmation.confirmation_token, unique_id)
 
 @app.get("/description/{id}")
 async def get_description(id: str):
@@ -114,14 +115,23 @@ async def get_paid_payments():
 
 def get_google_sheet(sheet_name: str):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.apps.googleusercontent.com.json', scope)
+    
+    # Получаем JSON-строку из переменной окружения
+    json_str = os.getenv('GOOGLE_SHEET_CREDENTIALS')  # Замените на имя вашей переменной окружения
+    
+    # Загружаем данные из строки JSON
+    creds_dict = json.loads(json_str)
+    
+    # Создаем объект Credentials из словаря
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+    
     client = gspread.authorize(creds)
     
     # Открываем таблицу по имени
     sheet = client.open(sheet_name).sheet1  # Можно изменить на нужный лист
     return sheet
 
-@app.post("/save-description-to-sheet/{id}")
+@app.get("/save-description-to-sheet/{id}")
 async def save_description_to_sheet(id: str):
     # Получение описания по уникальному идентификатору
     result = db.search(Description.id == id)
@@ -132,7 +142,7 @@ async def save_description_to_sheet(id: str):
     description = result[0]['description']
     
     # Запись описания в Google Таблицу
-    sheet = get_google_sheet("Your Google Sheet Name")
+    sheet = get_google_sheet("computer-vision-course-website-paid-payments-descriptions")
     
     # Добавляем новую строку с описанием
     sheet.append_row([id, description])  # Здесь вы можете изменить, какие данные хотите записать

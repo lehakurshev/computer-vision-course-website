@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваш Платеж Успешно Обработан | Премиум Подтверждение</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .gold-text {
+            background: linear-gradient(to right, #D4AF37, #F5D327);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .diamond-effect {
+            position: relative;
+        }
+        
+        .diamond-effect:after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.8) 0%, 
+                rgba(255,255,255,0) 50%, 
+                rgba(255,255,255,0.8) 100%);
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .diamond-effect:hover:after {
+            opacity: 1;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="absolute w-full h-full overflow-hidden pointer-events-none" id="confetti-container"></div>
+    
+    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden diamond-effect transition-all duration-500 transform hover:scale-[1.01]">
+        <div class="relative">
+            <div class="bg-gradient-to-r from-blue-900 to-purple-900 p-8 text-center">
+                <h1 class="text-5xl font-bold text-white mb-2 font-playfair">ВАША ОПЛАТА</h1>
+                <div class="flex justify-center items-center">
+                    <div class="w-16 h-1 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-full mx-2"></div>
+                    <h2 class="text-4xl font-bold gold-text font-playfair">УСПЕШНО ВЫПОЛНЕНА</h2>
+                    <div class="w-16 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300 rounded-full mx-2"></div>
+                </div>
+            </div>
+            
+            <div class="p-10 text-center">
+                <div class="flex justify-center mb-8 floating">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-yellow-500 animate__animated animate__tada animate__infinite" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                
+                <p class="text-gray-600 text-lg mb-6 animate__animated animate__fadeIn">
+                    Дорогой клиент, мы с гордостью сообщаем, что ваш платеж был обработан с безупречной точностью.
+                </p>
+                
+                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mb-8 border border-gray-200 animate__animated animate__fadeInUp">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500 font-medium">Сумма платежа:</span>
+                        <span class="text-2xl font-bold gold-text">9 999  ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500 font-medium">Дата транзакции:</span>
+                        <span class="text-xl font-semibold text-gray-700">01.01.2023</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500 font-medium">Номер транзакции:</span>
+                        <span class="text-xl font-semibold text-gray-700">#XP-987654321</span>
+                    </div>
+                </div>
+                
+                <p class="text-gray-500 mb-8 animate__animated animate__fadeIn">
+                    <span class="block mb-2">Мы ценим ваше доверие и гарантируем исключительное качество наших услуг.</span>
+                    <span class="block">Квитанция была отправлена на ваш email.</span>
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 animate__animated animate__fadeInLeft">
+                        Скачать квитанцию
+                    </button>
+                    <button class="px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 animate__animated animate__fadeInRight">
+                        Вернуться на главную
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-6 text-center border-t border-gray-200">
+                <p class="text-gray-500 text-sm">
+                    Благодарим вас за выбор наших премиальных услуг. По всем вопросам обращайтесь в нашу <a href="#" class="text-blue-600 hover:underline">службу поддержки</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создаем конфетти
+            const container = document.getElementById('confetti-container');
+            const colors = ['#FF5252', '#FFD740', '#64FFDA', '#448AFF', '#B388FF'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 8 + 4 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = '50%';
+                container.appendChild(confetti);
+                
+                animateConfetti(confetti);
+            }
+            
+            function animateConfetti(element) {
+                const startTime = Date.now();
+                const duration = Math.random() * 3000 + 3000;
+                const startX = parseFloat(element.style.left);
+                const endX = startX + (Math.random() * 200 - 100);
+                
+                const animation = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = elapsed / duration;
+                    
+                    if (progress >= 1) {
+                        element.style.top = -10 + 'px';
+                        element.style.left = startX + 'vw';
+                        animateConfetti(element);
+                        return;
+                    }
+                    
+                    const yPos = progress * 100;
+                    const xPos = startX + (endX - startX) * progress;
+                    
+                    element.style.opacity = 1;
+                    element.style.top = yPos + 'vh';
+                    element.style.left = xPos + 'vw';
+                    element.style.transform = `rotate(${progress * 360 * 5}deg)`;
+                    
+                    requestAnimationFrame(animation);
+                };
+                
+                requestAnimationFrame(animation);
+            }
+            
+            // Добавляем небольшую задержку для анимации элементов
+            setTimeout(() => {
+                document.querySelector('.diamond-effect').classList.add('animate__animated', 'animate__fadeIn');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

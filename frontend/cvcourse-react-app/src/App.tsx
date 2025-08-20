@@ -181,7 +181,7 @@ function App() {
     const fetchConfirmationToken = async () => {
       try {
         const response = await axios.post(
-          `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token`,
+          `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token-and-description-id`,
           formValues
         );
         const data = response.data
@@ -190,11 +190,11 @@ function App() {
         //   throw new Error(`HTTP error! Status: ${response.status}`);
         // }
 
-        const token = data; // Get the token as text
+        const token = data[0]; // Get the token as text
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
-          return_url: `http://${import.meta.env.VITE_SERVER_HOST}`,
+          return_url: `http://${import.meta.env.VITE_SERVER_HOST}:8000/save-description-to-sheet/${data[1]}`,
 
           customization: {
             colors: {
