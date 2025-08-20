@@ -115,9 +115,11 @@ async def get_paid_payments():
 
 def fix_json_like_string(input_string: str) -> str:
 
-    json_string = re.sub(r"(\w+):", r'"\1":', input_string)
+    json_string = input_string.replace("  ", "  \"")
 
-    json_string = re.sub(r":\s*(\w+)", r': "\1"', json_string)
+    json_string = json_string.replace(": ", "\": \"")
+
+    json_string = json_string.replace(",", "\",")
 
     return json_string
 
