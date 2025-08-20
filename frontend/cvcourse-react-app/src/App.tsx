@@ -290,7 +290,7 @@ function App() {
               <div className="text-blue-500 mb-4">
                 <i className="fas fa-laptop-code text-4xl"></i>
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-black-500">Практические проекты</h3>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: 'rgb(33, 53, 71)' }}>Практические проекты</h3>
               <p className="text-gray-600">Применяйте концепции сразу же с реальными проектами, которые помогут вам
                 создать портфолио и уверенность.</p>
             </div>
@@ -298,7 +298,7 @@ function App() {
               <div className="text-blue-500 mb-4">
                 <i className="fas fa-chart-line text-4xl"></i>
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-black-500">Структурированный учебный план</h3>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: 'rgb(33, 53, 71)' }}>Структурированный учебный план</h3>
               <p className="text-gray-600">Наш тщательно продуманный учебный план ведет вас от основ до продвинутых
                 тем в логической последовательности.</p>
             </div>
@@ -306,7 +306,7 @@ function App() {
               <div className="text-blue-500 mb-4">
                 <i className="fas fa-headset text-4xl"></i>
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-black-500">Поддержка экспертов</h3>
+              <h3 className="text-xl font-semibold mb-4" style={{ color: 'rgb(33, 53, 71)' }}>Поддержка экспертов</h3>
               <p className="text-gray-600">Получите персонализированное руководство через наши консультационные
                 услуги, когда вам нужна дополнительная помощь.</p>
             </div>

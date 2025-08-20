@@ -114,7 +114,7 @@ async def get_paid_payments():
 
 def get_google_sheet(sheet_name: str):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/service-account-file.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.apps.googleusercontent.com.json', scope)
     client = gspread.authorize(creds)
     
     # Открываем таблицу по имени
