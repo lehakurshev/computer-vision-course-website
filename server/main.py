@@ -122,7 +122,7 @@ def fix_json_like_string(input_string: str) -> str:
     json_string = json_string.replace(",", "\",")
 
 
-    json_string = json_string.replace("\n}", "\n}")
+    json_string = json_string.replace("\"universe_domain\": \"googleapis.com", "\"universe_domain\": \"googleapis.com\"")
     return json_string
 
 
