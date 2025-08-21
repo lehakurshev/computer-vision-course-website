@@ -1,6 +1,6 @@
-from yookassa import Refund, Configuration, Payment
+from yookassa import Refund, Configuration, Payment, Webhook
 import uuid
-from fastapi import FastAPI, Response, HTTPException, Body
+from fastapi import FastAPI, Response, HTTPException, Body, Request
 import os
 import json
 from fastapi.middleware.cors import CORSMiddleware
@@ -89,6 +89,35 @@ async def get_description(id: str):
 
     return result[0]['description']
 
+Webhook.add({
+    "event": "payment.succeeded",
+    "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+})
+
+Webhook.add({
+    "event": "payment.waiting_for_capture",
+    "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+})
+
+@app.post('/yookassa-webhook')
+async def handle_payment(request: Request):
+    event_json = await request.json()
+    payment_id = event_json['object']['id']
+    user_id = event_json['object']['metadata']['user_id']
+    
+    if event_json['event'] == 'payment.succeeded':
+
+        amount = event_json['object']['amount']['value']
+        payment_method_id = event_json['object']['payment_method']['id']
+        
+        print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
+        
+
+    elif event_json['event'] == 'payment.waiting_for_capture':
+        Payment.capture(payment_id)
+        
+    return {"status": "ok"}
+
 
 def get_paid_payments_description() -> List[str]:
     """Retrieves IDs of paid payments."""
@@ -122,16 +151,6 @@ def get_google_sheet(sheet_name: str):
     return sheet
 
 def description_to_dict(description: str) -> Dict[str, str]:
-    """
-    Parses a description string into a dictionary.
-
-    Args:
-        description: The description string in the format "key='value' key='value' ...".
-
-    Returns:
-        A dictionary where keys are the description keys and values are the corresponding values.
-        Returns an empty dictionary if the input is invalid.
-    """
     try:
         # Use regular expression to find key-value pairs
         matches = re.findall(r"(\w+)='([^']*)'", description)
@@ -146,8 +165,7 @@ async def save_description_to_sheet(id: str):
 
     # 1. Check if the ID exists in paid payments
     paid_payment_ids = get_paid_payments_description()
-    print(id)
-    print(paid_payment_ids)
+    
     if id not in paid_payment_ids:
         raise HTTPException(
             status_code=400,
