@@ -1,2 +1,3 @@
 /db_data
 *.apps.googleusercontent.com.json
+*auth.json
