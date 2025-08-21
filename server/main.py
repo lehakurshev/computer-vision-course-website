@@ -128,23 +128,9 @@ def fix_json_like_string(input_string: str) -> str:
 
 def get_google_sheet(sheet_name: str):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    
-    # Получаем JSON-строку из переменной окружения
-    json_str = os.getenv('GOOGLE_SHEET_CREDENTIALS')  # Замените на имя вашей переменной окружения
-    print(json_str)
-    json_str = fix_json_like_string(json_str)
-    print(json_str)
-    
-    # Загружаем данные из строки JSON
-    creds_dict = json.loads(json_str)
-    
-    # Создаем объект Credentials из словаря
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-    
-    client = gspread.authorize(creds)
-    
-    # Открываем таблицу по имени
-    sheet = client.open(sheet_name).sheet1  # Можно изменить на нужный лист
+    creds = gspread.service_account("auth.json", scope)
+    sheet = creds.open(sheet_name).sheet1
+
     return sheet
 
 @app.get("/save-description-to-sheet/{id}")
