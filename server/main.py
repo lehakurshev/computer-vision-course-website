@@ -91,7 +91,7 @@ async def get_description(id: str):
 
 
 @app.get("/paid-payments")
-async def get_paid_payments():
+async def get_paid_payments_ids():
     secure_payments = []
     cursor = None
 
@@ -113,18 +113,6 @@ async def get_paid_payments():
 
     return secure_payments
 
-def fix_json_like_string(input_string: str) -> str:
-
-    json_string = input_string.replace("  ", "  \"")
-
-    json_string = json_string.replace(": ", "\": \"")
-
-    json_string = json_string.replace(",", "\",")
-
-
-    json_string = json_string.replace("\"universe_domain\": \"googleapis.com", "\"universe_domain\": \"googleapis.com\"")
-    return json_string
-
 
 def get_google_sheet(sheet_name: str):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -133,22 +121,69 @@ def get_google_sheet(sheet_name: str):
 
     return sheet
 
+def description_to_dict(description: str) -> Dict[str, str]:
+    """
+    Parses a description string into a dictionary.
+
+    Args:
+        description: The description string in the format "key='value' key='value' ...".
+
+    Returns:
+        A dictionary where keys are the description keys and values are the corresponding values.
+        Returns an empty dictionary if the input is invalid.
+    """
+    try:
+        # Use regular expression to find key-value pairs
+        matches = re.findall(r"(\w+)='([^']*)'", description)
+        return dict(matches)
+    except Exception:
+        return {}
+
+
 @app.get("/save-description-to-sheet/{id}")
 async def save_description_to_sheet(id: str):
-    # Получение описания по уникальному идентификатору
-    result = db.search(Description.id == id)
-    
+    """Saves the description of a payment with the given ID to a Google Sheet."""
+
+    # 1. Check if the ID exists in paid payments
+    paid_payment_ids = get_paid_payments_ids()
+    if id not in paid_payment_ids:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Payment ID '{id}' not found in paid payments."
+        )
+
+    # 2. Get the Google Sheet
+    sheet = get_google_sheet(
+        "computer-vision-course-website-paid-payments-descriptions"
+    )
+
+    # 3. Check if the ID already exists in the sheet
+    existing_ids = sheet.col_values(1)  # Assuming ID is in the first column
+    if id in existing_ids:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Payment ID '{id}' already exists in the Google Sheet."
+        )
+
+    # 4. Retrieve the description
+    result = db.search(Description.id == id)  # Assuming Description model
     if not result:
         raise HTTPException(status_code=404, detail="Description not found")
-    
-    description = result[0]['description']
-    
-    # Запись описания в Google Таблицу
-    sheet = get_google_sheet("computer-vision-course-website-paid-payments-descriptions")
-    
-    # Добавляем новую строку с описанием
-    sheet.append_row([id, description])  # Здесь вы можете изменить, какие данные хотите записать
-    
+
+    description = result[0]["description"]
+
+    # 5. Parse the description string into a dictionary
+    description_data = description_to_dict(description)
+
+    # 6. Create a list of values to append to the sheet
+    row_values = [id] + list(description_data.values())  # Add ID first, then values
+
+    # Ensure the data does not contain newline or carriage return characters
+    row_values = [str(value).replace('\n', ' ').replace('\r', ' ') for value in row_values]
+
+    # 7. Append the row to the Google Sheet
+    sheet.append_row(row_values)
+
     return {"message": "Description saved to Google Sheet", "id": id}
 
 
