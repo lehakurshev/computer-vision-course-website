@@ -146,6 +146,8 @@ async def save_description_to_sheet(id: str):
 
     # 1. Check if the ID exists in paid payments
     paid_payment_ids = get_paid_payments_ids()
+    print(id)
+    print(paid_payment_ids)
     if id not in paid_payment_ids:
         raise HTTPException(
             status_code=400,
