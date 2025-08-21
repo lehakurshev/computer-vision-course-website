@@ -26,11 +26,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
       
-      - name: Create auth.json
+      - name: Create auth.json on server
         run: |
-          echo "${{ env.GOOGLE_SHEET_CREDENTIALS }}" > auth.json
-          scp -o StrictHostKeyChecking=no auth.json ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.PROJECT_PATH }}/server/auth.json
-          rm auth.json # Удаляем локальный файл после копирования
+          echo "${{ secrets.GOOGLE_SHEET_CREDENTIALS }}" | ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "cat > ${{ env.PROJECT_PATH }}/server/auth.json"
       
       - name: Deploy to Server
         run: |
