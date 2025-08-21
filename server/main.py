@@ -90,7 +90,7 @@ async def get_description(id: str):
     return result[0]['description']
 
 
-def get_paid_payments_ids() -> List[str]:
+def get_paid_payments_description() -> List[str]:
     """Retrieves IDs of paid payments."""
     secure_payments_ids = []
     cursor = None
@@ -101,7 +101,7 @@ def get_paid_payments_ids() -> List[str]:
             # Фильтруем платежи по условию paid == true
             for payment in payments.items:
                 if hasattr(payment, 'paid') and payment.paid:
-                    secure_payments_ids.append(payment.id) # Store id
+                    secure_payments_ids.append(payment.description) # Store id
 
             # Если есть следующий курсор, продолжаем запросы
             if not payments.next_cursor:
@@ -145,7 +145,7 @@ async def save_description_to_sheet(id: str):
     """Saves the description of a payment with the given ID to a Google Sheet."""
 
     # 1. Check if the ID exists in paid payments
-    paid_payment_ids = get_paid_payments_ids()
+    paid_payment_ids = get_paid_payments_description()
     print(id)
     print(paid_payment_ids)
     if id not in paid_payment_ids:
