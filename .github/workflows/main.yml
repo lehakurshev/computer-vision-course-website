@@ -25,7 +25,13 @@ jobs:
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
-
+      
+      - name: Create auth.json
+        run: |
+          echo "${{ env.GOOGLE_SHEET_CREDENTIALS }}" > auth.json
+          scp -o StrictHostKeyChecking=no auth.json ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.PROJECT_PATH }}/server/auth.json
+          rm auth.json # Удаляем локальный файл после копирования
+      
       - name: Deploy to Server
         run: |
           # Update code on server (fetch latest changes from main and reset)
