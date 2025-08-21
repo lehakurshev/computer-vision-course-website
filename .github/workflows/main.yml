@@ -28,7 +28,7 @@ jobs:
       
       - name: Create auth.json on server
         run: |
-          echo "${{ secrets.GOOGLE_SHEET_CREDENTIALS }}" | ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "cat > ${{ env.PROJECT_PATH }}/server/auth.json"
+          echo '${{ secrets.GOOGLE_SHEET_CREDENTIALS }}' | ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "cat > ${{ env.PROJECT_PATH }}/server/auth.json"
       
       - name: Deploy to Server
         run: |
