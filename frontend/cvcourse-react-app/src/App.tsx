@@ -194,7 +194,7 @@ function App() {
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
-          return_url: `http://${import.meta.env.VITE_SERVER_HOST}`,
+          return_url: `http://${import.meta.env.VITE_SERVER_HOST}:8000/yookassa-resolver/${data[1]}`,
 
           customization: {
             colors: {

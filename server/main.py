@@ -1,6 +1,7 @@
 from yookassa import Refund, Configuration, Payment, Webhook
 import uuid
-from fastapi import FastAPI, Response, HTTPException, Body, Request
+from fastapi import FastAPI, Response, HTTPException, Body, Request, BackgroundTasks, status
+from fastapi.responses import RedirectResponse
 import os
 import json
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,6 +9,7 @@ from pydantic import BaseModel
 from tinydb import TinyDB, Query
 from typing import List, Dict, Any
 import re
+import time
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -158,19 +160,34 @@ def description_to_dict(description: str) -> Dict[str, str]:
     except Exception:
         return {}
 
+@app.get("/yookassa-resolver/{id}")
+async def yookassa_resolver(id: str, background_tasks: BackgroundTasks):
+    background_tasks.add_task(save_description_to_sheet, id)
+    return RedirectResponse(url="/success", status_code=status.HTTP_303_SEE_OTHER)
 
-@app.get("/save-description-to-sheet/{id}")
+
 async def save_description_to_sheet(id: str):
     """Saves the description of a payment with the given ID to a Google Sheet."""
+
+    start_time = time.time()
+    timeout = 2 * 60 * 60  # 2 часа в секундах
+    retry_delay = 60  # 1 минута между попытками (можно настроить)
+    
+    while time.time() - start_time < timeout:
+        paid_payment_ids = get_paid_payments_description()
+
+        if id in paid_payment_ids:
+            return  # ID найден, функция завершается успешно
+
+        print(f"Payment ID '{id}' не найден. Повторная попытка через {retry_delay} секунд...")
+        time.sleep(retry_delay)
 
     # 1. Check if the ID exists in paid payments
     paid_payment_ids = get_paid_payments_description()
     
     if id not in paid_payment_ids:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Payment ID '{id}' not found in paid payments."
-        )
+        print(f"Payment ID '{id}' not found in paid payments.")
+        return
 
     # 2. Get the Google Sheet
     sheet = get_google_sheet(
@@ -180,15 +197,15 @@ async def save_description_to_sheet(id: str):
     # 3. Check if the ID already exists in the sheet
     existing_ids = sheet.col_values(1)  # Assuming ID is in the first column
     if id in existing_ids:
-        raise HTTPException(
-            status_code=409,
-            detail=f"Payment ID '{id}' already exists in the Google Sheet."
-        )
+        print(f"Payment ID '{id}' already exists in the Google Sheet.")
+        return
+
 
     # 4. Retrieve the description
     result = db.search(Description.id == id)  # Assuming Description model
     if not result:
-        raise HTTPException(status_code=404, detail="Description not found")
+        print(f"Description not found")
+        return
 
     description = result[0]["description"]
 
@@ -204,7 +221,7 @@ async def save_description_to_sheet(id: str):
     # 7. Append the row to the Google Sheet
     sheet.append_row(row_values)
 
-    return {"message": "Description saved to Google Sheet", "id": id}
+    print(f"message: Description saved to Google Sheet, id: {id}")
 
 
 @app.get("/all-payments")
