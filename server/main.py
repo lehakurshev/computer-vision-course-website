@@ -163,7 +163,7 @@ def description_to_dict(description: str) -> Dict[str, str]:
 @app.get("/yookassa-resolver/{id}")
 async def yookassa_resolver(id: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(save_description_to_sheet, id)
-    return RedirectResponse(url="/success", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url=f"http://{os.getenv('SERVER_HOST')}", status_code=status.HTTP_303_SEE_OTHER)
 
 
 async def save_description_to_sheet(id: str):
