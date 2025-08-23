@@ -23,6 +23,19 @@ import {
 import { type SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios';
 
+
+import аccordionСontent1 from '../../../Программа_курса_часть_1.json';
+import аccordionСontent2 from '../../../Программа_курса_часть_2.json';
+
+interface AccordionItem {
+  title: string;
+  details: string[];
+}
+
+interface АccordionСontent {
+  [key: string]: AccordionItem[];
+}
+
 interface YooMoneyCheckoutWidgetOptions {
   confirmation_token: string;
   return_url: string | undefined;
@@ -149,15 +162,6 @@ function App() {
       return next
     })
   }
-
-  // useEffect(() => {
-  //   if (!showPaymentDiv) return
-  //   // Инициализация внешнего платежного виджета внутри <div id="payment-form"></div>
-  //   // const el = document.getElementById('payment-form')
-  //   // if (el) externalPaymentSDK.init({ mount: el, ... })
-  //   console.log('Инициализация платежного блока: #payment-form')
-  // }, [showPaymentDiv])
-
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -328,353 +332,56 @@ function App() {
                 </a>
               </div>
               <div className="space-y-4">
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">1.1 формирование изображений</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">Принципы формирования изображений, включая историю
-                          развития фотографических технологий и методов цифровой съемки.</p>
-                        <p className="text-gray-700 mt-2">Детали устройства современных фотоматриц (ПЗС
-                          и КМОП).</p>
-                        <p className="text-gray-700 mt-2">Типичные проблемы, такие как эффект муара и
-                          шум.</p>
-                        <p className="text-gray-700 mt-2">Обзор различных типов датчиков и источников
-                          данных,
-                          используемых в компьютерных системах видения.</p>
-                        <p className="text-gray-700 mt-2">Формы представления и форматы хранения
-                          изображений (BMP, TIFF, PNG, JPEG).</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">1.2 Цвет</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">Основы восприятия цвета человеком, устройство
-                          человеческого глаза и механизм цветовосприятия.</p>
-                        <p className="text-gray-700 mt-2">Теории цветовосприятия и эксперименты,
-                          подтверждающие три-хроматические принципы зрения.</p>
-                        <p className="text-gray-700 mt-2">Современные цветовые модели, используемые в
-                          компьютерной графике и обработке изображений (RGB, HSV, HSL, YUV, CMYK,
-                          LAB).</p>
-                        <p className="text-gray-700 mt-2">Методы работы с цветом в рамках конкретных
-                          задач распознавания и анализа изображений.</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">2.1 Морфологические
-                        операции</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">Основные понятия: Понятие окрестности пикселя,
-                          четыре- и восьмисвязные окрестности.</p>
-                        <p className="text-gray-700 mt-2">Бинарные изображения: Внутренние и граничные
-                          пиксели.</p>
-                        <p className="text-gray-700 mt-2">Морфологические операции: Эрозия, дилатация,
-                          открытие и замыкание множества.</p>
-                        <p className="text-gray-700 mt-2">Практика: Алгоритмы для построения скелетов
-                          фигур.</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">2.2 Знакомство с OpenCV</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">Основы восприятия цвета человеком, устройство
-                          человеческого глаза и механизм цветовосприятия.</p>
-                        <p className="text-gray-700 mt-2">Теории цветовосприятия и эксперименты,
-                          подтверждающие три-хроматические принципы зрения.</p>
-                        <p className="text-gray-700 mt-2">Современные цветовые модели, используемые в
-                          компьютерной графике и обработке изображений (RGB, HSV, HSL, YUV, CMYK,
-                          LAB).</p>
-                        <p className="text-gray-700 mt-2">Методы работы с цветом в рамках конкретных
-                          задач распознавания и анализа изображений.</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">2.3 Методы улучшения
-                        изображений</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">Логарифмическая и степенная гамма-коррекция:
-                          Улучшение контраста и детализации изображений.</p>
-                        <p className="text-gray-700 mt-2">Кусочно-линейные преобразования: Локальное
-                          улучшение характеристик изображения.</p>
-                        <p className="text-gray-700 mt-2">Гистограммы: Анализ распределения яркости
-                          пикселей и нормализация изображений.</p>
-                        <p className="text-gray-700 mt-2">Эквализация гистограмм: Повышение
-                          воспринимаемого контраста и выявление деталей.</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">3.1 Фильтрация.
-                        Сглаживание</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">3.2 Поиск контуров</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст
-                        </p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">4.1 Поиск лиц</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">4.2 Анализ фона и движения на
-                        видео</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст
-                        </p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                {Object.entries(аccordionСontent1 as АccordionСontent).map(([key, items]) => (
+                  <div key={key}>
+                    {items.map((item, index) => (
+                      <Accordion key={index}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel-${key}-${index}-content`} id={`panel-${key}-${index}-header`}>
+                          <Typography component="span">{item.title}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
+                            {item.details.map((paragraph, i) => (
+                              <p key={i} className="text-gray-700 mt-2">{paragraph}</p>
+                            ))}
+                          </Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+          <div className="mb-16 bg-white rounded-xl shadow-md overflow-hidden">
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-semibold text-blue-600">Часть 2</h3>
+                <h3 className="text-2xl font-semibold text-blue-600">Часть 1</h3>
                 <a href="#"
                   className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white active:text-white px-6 py-2 rounded-lg font-medium transition duration-300">
                   Смотреть на Stepik <i className="fas fa-external-link-alt ml-2"></i>
                 </a>
               </div>
-
               <div className="space-y-4">
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">5.1 Поиск по шаблону</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">5.2 Ключевые точки</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст
-                        </p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">6.1 Сглаживание с сохранением
-                        границ</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">6.2 Сегментация
-                        изображений</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст
-                        </p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1-content"
-                      id="panel1-header"
-                    >
-                      <Typography component="span">7.1 Стереосопоставление</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
-                        <p className="text-gray-700">текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                        <p className="text-gray-700 mt-2">текст текст текст текст текст текст текст
-                          текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст текст текст
-                          текст текст текст текст текст текст текст текст текст текст</p>
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                {Object.entries(аccordionСontent2 as АccordionСontent).map(([key, items]) => (
+                  <div key={key}>
+                    {items.map((item, index) => (
+                      <Accordion key={index}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel-${key}-${index}-content`} id={`panel-${key}-${index}-header`}>
+                          <Typography component="span">{item.title}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography className="bg-gray-50 p-4 rounded-lg mt-2">
+                            {item.details.map((paragraph, i) => (
+                              <p key={i} className="text-gray-700 mt-2">{paragraph}</p>
+                            ))}
+                          </Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -859,7 +566,7 @@ function App() {
                         control={
                           <Checkbox
                             checked={consent}
-                            onChange={(event) => {setConsent(event.target.checked); }}
+                            onChange={(event) => { setConsent(event.target.checked); }}
                             name="consent"
                           />
                         }
@@ -920,8 +627,8 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 22025 cvcourse.ru Все права защищены.<br/>ИП Дунаева Александра Валерьевна<br/>ИНН 668500174244</p>
-            </div>
+            <p>&copy; 22025 cvcourse.ru Все права защищены.<br />ИП Дунаева Александра Валерьевна<br />ИНН 668500174244</p>
+          </div>
         </div>
       </footer>
     </div>
