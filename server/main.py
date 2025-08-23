@@ -177,7 +177,8 @@ async def save_description_to_sheet(id: str):
         paid_payment_ids = get_paid_payments_description()
 
         if id in paid_payment_ids:
-            return  # ID найден, функция завершается успешно
+            print(f"Payment ID '{id}' найден.")
+            break  # ID найден, функция завершается успешно
 
         print(f"Payment ID '{id}' не найден. Повторная попытка через {retry_delay} секунд...")
         time.sleep(retry_delay)
