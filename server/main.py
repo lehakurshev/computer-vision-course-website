@@ -89,34 +89,34 @@ async def get_description(id: str):
 
     return result[0]['description']
 
-Webhook.add({
-    "event": "payment.succeeded",
-    "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
-})
+# Webhook.add({
+#     "event": "payment.succeeded",
+#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+# })
 
-Webhook.add({
-    "event": "payment.waiting_for_capture",
-    "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
-})
+# Webhook.add({
+#     "event": "payment.waiting_for_capture",
+#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+# })
 
-@app.post('/yookassa-webhook')
-async def handle_payment(request: Request):
-    event_json = await request.json()
-    payment_id = event_json['object']['id']
-    user_id = event_json['object']['metadata']['user_id']
+# @app.post('/yookassa-webhook')
+# async def handle_payment(request: Request):
+#     event_json = await request.json()
+#     payment_id = event_json['object']['id']
+#     user_id = event_json['object']['metadata']['user_id']
     
-    if event_json['event'] == 'payment.succeeded':
+#     if event_json['event'] == 'payment.succeeded':
 
-        amount = event_json['object']['amount']['value']
-        payment_method_id = event_json['object']['payment_method']['id']
+#         amount = event_json['object']['amount']['value']
+#         payment_method_id = event_json['object']['payment_method']['id']
         
-        print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
+#         print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
         
 
-    elif event_json['event'] == 'payment.waiting_for_capture':
-        Payment.capture(payment_id)
+#     elif event_json['event'] == 'payment.waiting_for_capture':
+#         Payment.capture(payment_id)
         
-    return {"status": "ok"}
+#     return {"status": "ok"}
 
 
 def get_paid_payments_description() -> List[str]:

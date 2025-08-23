@@ -194,7 +194,7 @@ function App() {
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
-          return_url: `http://${import.meta.env.VITE_SERVER_HOST}:8000/save-description-to-sheet/${data[1]}`,
+          return_url: `http://${import.meta.env.VITE_SERVER_HOST}`,
 
           customization: {
             colors: {
