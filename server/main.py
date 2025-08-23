@@ -171,7 +171,7 @@ async def save_description_to_sheet(id: str):
 
     start_time = time.time()
     timeout = 2 * 60 * 60  # 2 часа в секундах
-    retry_delay = 60  # 1 минута между попытками (можно настроить)
+    retry_delay = 10  # 1 минута между попытками (можно настроить)
     
     while time.time() - start_time < timeout:
         paid_payment_ids = get_paid_payments_description()
