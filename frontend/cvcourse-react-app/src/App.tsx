@@ -4,6 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TelegramPostsGallery from './TelegramPostsGallery';
 
 import {
   Box,
@@ -248,7 +249,7 @@ function App() {
               <a href="#home" className="nav-link py-4 px-3 text-gray-700 hover:text-blue-500">Главная</a>
               <a href="#program" className="nav-link py-4 px-3 text-gray-700 hover:text-blue-500">Программа курса</a>
               <a href="#author" className="nav-link py-4 px-3 text-gray-700 hover:text-blue-500">Об авторе</a>
-              <a href="#consultation" className="nav-link py-4 px-3 text-gray-700 hover:text-blue-500">Получить консультацию</a>
+              <a href="#consultation" className="nav-link-consultation py-4 px-3 text-blue-700 hover:text-blue-500 text-shadow-sm">Получить консультацию</a>
             </div>
             <div className="md:hidden flex items-center">
               <button className="outline-none mobile-menu-button" onClick={toggleMobileMenu}>
@@ -590,6 +591,7 @@ function App() {
           </div>
         </div>
       </section>
+      <TelegramPostsGallery />
       {/*  */}
       <footer className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-6">

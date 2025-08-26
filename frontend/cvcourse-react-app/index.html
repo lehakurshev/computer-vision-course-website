@@ -47,7 +47,26 @@
       transition: width 0.3s ease;
     }
 
+    .nav-link-consultation {
+      position: relative;
+    }
+
+    .nav-link-consultation::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #5d00ff;
+      transition: width 0.3s ease;
+    }
+
     .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link-consultation:hover::after {
       width: 100%;
     }
 
@@ -57,8 +76,49 @@
       width: 100%;
     }
 
-    button[class*="Mui"]:focus {
-        outline: none !important;
+    button {
+      outline: none !important;
+    }
+
+    .text-shadow-sm {
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      /* Пример значения, можно настроить */
+    }
+
+    /*  */
+
+    .telegram-post {
+      transition: all 0.3s ease;
+    }
+
+    .telegram-post:hover {
+      transform: translateY(-5px);
+    }
+
+    .carousel-container {
+      scroll-behavior: smooth;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      padding-bottom: 1000px;
+      height: 0;
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, white 0%, white calc(100% - 100px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, white 0%, white calc(100% - 100px), transparent 100%);
+    }
+
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 
