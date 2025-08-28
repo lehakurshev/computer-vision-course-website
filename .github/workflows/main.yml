@@ -21,12 +21,11 @@ jobs:
         with:
           fetch-depth: 0 # Ensure we have the entire git history
 
-      - name: Configure SSH Agent with Passphrase
+      - name: Configure SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
-          ssh-private-key: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_KEY }}
-          ssh-private-key-passphrase: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_PASSPHRASE }} # Добавьте секрет для passphrase
-
+          ssh-private-key: ${{ secrets.CVCOURSE_GITHUB_ACTIONS_KEY }} # Используйте секрет, содержащий ваш приватный SSH ключ
+      
       - name: Create auth.json on server
         run: |
           echo '${{ secrets.GOOGLE_SHEET_CREDENTIALS }}' | ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "cat > ${{ env.PROJECT_PATH }}/server/auth.json"
