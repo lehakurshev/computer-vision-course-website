@@ -1,4 +1,4 @@
-uvicorn
+uvicorn==0.35.0
 tinydb
 gspread
 oauth2client
