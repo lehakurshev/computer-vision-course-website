@@ -9,7 +9,7 @@ env:
   YOOKASSA_SHOP_ID: ${{ secrets.YOOKASSA_SHOP_ID }}
   YOOKASSA_SHOP_SECRET: ${{ secrets.YOOKASSA_SHOP_SECRET }}
   GOOGLE_SHEET_CREDENTIALS: ${{ secrets.GOOGLE_SHEET_CREDENTIALS }}
-  PROJECT_PATH: /home/root/computer-vision-course-website
+  PROJECT_PATH: /root/computer-vision-course-website
 
 jobs:
   deploy:
