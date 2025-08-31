@@ -24,28 +24,28 @@ COPY nginx/nginx.conf.no-ssl /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Создаем необходимые директории и устанавливаем права
-RUN mkdir -p /run /var/log/letsencrypt && chown -R nginx:nginx /run /var/cache/nginx /etc/nginx/certs
+RUN mkdir -p /run && chown -R nginx:nginx /run && mkdir -p /var/cache/nginx && chown -R nginx:nginx /var/cache/nginx && mkdir -p /etc/nginx/certs
 
 # Set up permissions for Certbot logging
 RUN chown -R nginx:nginx /var/log/letsencrypt
+
 # Меняем владельца файлов на пользователя Nginx
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
 # Установка Certbot
 RUN apk add --no-cache certbot certbot-nginx
 
-# Run Certbot and reload Nginx *before* switching user
+# Запускаем Nginx в фоне чтобы certbot мог его использовать.  Это ВАЖНО.
+# Также, запуск в фоне, иначе certbot не сможет его остановить/перезапустить
 CMD nginx -g "daemon off;" & \
-    sleep 10 && \
+    sleep 5 && \
     certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru && \
+    # Меняем владельца каталога с сертификатами на пользователя nginx после создания
+    chown -R nginx:nginx /etc/letsencrypt && \
     nginx -s reload
 
 # Меняем конфигурацию Nginx на SSL после получения сертификатов
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Меняем владельца каталога с сертификатами на пользователя nginx
-# Run chown command after copying the SSL config
-# chown -R nginx:nginx /etc/letsencrypt && \
 
 # Возвращаемся к пользователю nginx
 USER nginx
