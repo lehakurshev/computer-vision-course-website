@@ -27,7 +27,7 @@ import axios from 'axios';
 
 import аccordionСontent1 from '../Программа_курса_часть_1.json';
 import аccordionСontent2 from '../Программа_курса_часть_2.json';
-import consultationsData from '../consultations.json';
+import consultationsData from '../../const/consultations.json';
 
 interface AccordionItem {
   title: string;
@@ -78,6 +78,7 @@ interface Consultation {
   duration: string;
   price: string;
   time: string;
+  label: string;
 }
 
 const validateField = (name: keyof FormValues, value: string): string | undefined => {
@@ -467,7 +468,7 @@ function App() {
                   {consultations.map((item) => (
                     <div key={item.value} className="p-4 bg-blue-600 rounded-lg">
                       <h4 className="font-bold text-lg">{item.title}</h4>
-                      <p>{item.duration} / {item.price}</p>
+                      <p>{item.duration} / {item.price} рублей</p>
                       <p className="text-sm opacity-90">{item.time}</p>
                     </div>
                   ))}
@@ -499,7 +500,7 @@ function App() {
                             key={item.value}
                             value={item.value}
                             control={<Radio />}
-                            label={`${item.title} (${item.duration} / ${item.price})`}
+                            label={`${item.label}`}
                             sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }}
                           />
                         ))}
