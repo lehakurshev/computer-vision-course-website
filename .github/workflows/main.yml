@@ -49,5 +49,5 @@ jobs:
             # Clean up unused Docker resources
             docker system prune -f --volumes;
             docker-compose down --rmi all --volumes;
-            docker-compose up --build -d
+            docker-compose up --build --no-cache -d
           "
