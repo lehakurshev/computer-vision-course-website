@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -27,6 +27,7 @@ import axios from 'axios';
 
 import аccordionСontent1 from '../Программа_курса_часть_1.json';
 import аccordionСontent2 from '../Программа_курса_часть_2.json';
+import consultationsData from '../consultations.json';
 
 interface AccordionItem {
   title: string;
@@ -71,6 +72,14 @@ interface FormValues {
 
 type Errors = Partial<Record<keyof FormValues, string>>
 
+interface Consultation {
+  value: string;
+  title: string;
+  duration: string;
+  price: string;
+  time: string;
+}
+
 const validateField = (name: keyof FormValues, value: string): string | undefined => {
   const v = value.trim()
   switch (name) {
@@ -110,6 +119,14 @@ function App() {
   const [email, setEmail] = useState<string>('')
   const [errors, setErrors] = useState<Errors>({})
   const [consent, setConsent] = useState<boolean>(false)
+
+  const [consultations, setConsultations] = useState<Consultation[]>([]);
+
+  useEffect(() => {
+    // Загрузка данных из JSON
+    setConsultations(consultationsData);
+  }, []);
+
 
   // Стейт для показа блока платежа вместо формы
   const [showPaymentDiv, setShowPaymentDiv] = useState<boolean>(false)
@@ -447,23 +464,13 @@ function App() {
                 <h3 className="text-2xl font-semibold mb-4">Варианты консультаций</h3>
 
                 <div className="space-y-6">
-                  <div className="p-4 bg-blue-600 rounded-lg">
-                    <h4 className="font-bold text-lg">Консультация с ассистентом курса</h4>
-                    <p>20 минут / 400 рублей</p>
-                    <p className="text-sm opacity-90">По будням с 9 до 19 МСК</p>
-                  </div>
-
-                  <div className="p-4 bg-blue-600 rounded-lg">
-                    <h4 className="font-bold text-lg">Консультация с ассистентом курса</h4>
-                    <p>60 минут / 1000 рублей</p>
-                    <p className="text-sm opacity-90">По будням с 9 до 19 МСК</p>
-                  </div>
-
-                  <div className="p-4 bg-blue-600 rounded-lg">
-                    <h4 className="font-bold text-lg">Консультация с автором курса Дунаевой Александрой</h4>
-                    <p>20 минут / 1000 рублей</p>
-                    <p className="text-sm opacity-90">По будням с 7.30 до 15.00 МСК</p>
-                  </div>
+                  {consultations.map((item) => (
+                    <div key={item.value} className="p-4 bg-blue-600 rounded-lg">
+                      <h4 className="font-bold text-lg">{item.title}</h4>
+                      <p>{item.duration} / {item.price}</p>
+                      <p className="text-sm opacity-90">{item.time}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -487,9 +494,15 @@ function App() {
                         }}
                         name="radio-buttons-group"
                       >
-                        <FormControlLabel value="assistant-20" control={<Radio />} label="Ассистент (20 мин / 400 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
-                        <FormControlLabel value="assistant-60" control={<Radio />} label="Ассистент (60 мин / 1000 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
-                        <FormControlLabel value="author-20" control={<Radio />} label="Автор курса (20 мин / 1000 руб)" sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }} />
+                        {consultations.map((item) => (
+                          <FormControlLabel
+                            key={item.value}
+                            value={item.value}
+                            control={<Radio />}
+                            label={`${item.title} (${item.duration} / ${item.price})`}
+                            sx={{ '& .MuiFormControlLabel-label': { color: '#000' } }}
+                          />
+                        ))}
                       </RadioGroup>
                       {errors.consult && <FormHelperText>{errors.consult}</FormHelperText>}
                     </FormControl>
