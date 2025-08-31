@@ -31,6 +31,13 @@ RUN chown -R nginx:nginx /usr/share/nginx/html
 # Установка Certbot
 RUN apk add --no-cache certbot certbot-nginx
 
+# Получаем сертификаты от имени root
+RUN certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru
+
+# Меняем владельца каталога с сертификатами на пользователя nginx (опционально, если том уже имеет нужные права)
+# RUN chown -R nginx:nginx /etc/letsencrypt
+
+# Возвращаемся к пользователю nginx
 USER nginx
 
 EXPOSE 80
@@ -39,5 +46,5 @@ EXPOSE 443
 ARG VITE_SERVER_HOST
 ENV VITE_SERVER_HOST=${VITE_SERVER_HOST}
 
-# Команда для запуска Nginx и получения сертификатов
-# CMD ["sh", "-c", "certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru && nginx -g 'daemon off;'"]
+# Команда для запуска Nginx
+CMD ["nginx", "-g", "daemon off;"]

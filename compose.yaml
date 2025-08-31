@@ -10,6 +10,7 @@ services:
     volumes:
       - ./const:/app/const
       - ./data:/etc/nginx/certs
+      - letsencrypt_data:/etc/letsencrypt  # Монтируем том для сертификатов
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
       - "443:443"
@@ -21,6 +22,7 @@ services:
     depends_on:
       - backend  # Frontend зависит от backend'a
     restart: always # Автоматический перезапуск при сбое
+    
 
 
 
@@ -47,3 +49,4 @@ networks:
 
 volumes:
   app_dist: {}  # Объявляем именованный том
+  letsencrypt_data:
