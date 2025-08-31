@@ -16,9 +16,7 @@ services:
     depends_on:
       - backend  # Frontend зависит от backend'a
     restart: always # Автоматический перезапуск при сбое
-    # volumes:
-    #   - ./frontend/cvcourse-react-app:/usr/share/nginx/html  # Только для разработки, hot reload
-    #user: nginx  # В большинстве случаев это не нужно, лучше настроить внутри Dockerfile
+
 
 
   backend:
