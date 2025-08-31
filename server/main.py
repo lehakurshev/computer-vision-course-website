@@ -36,10 +36,13 @@ Configuration.configure(os.getenv('YOOKASSA_SHOP_ID'), os.getenv('YOOKASSA_SHOP_
 db = TinyDB('/app/db_data/descriptions.json')
 Description = Query()
 
+# Чтение данных из файла consultations.json
+with open('consultations.json', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+
+# Создание словаря CONSULTATION_TYPE_MAPPING
 CONSULTATION_TYPE_MAPPING = {
-    "assistant-20": "400.00",
-    "assistant-60": "1000.00",
-    "author-20": "1000.00",
+    item['value']: f"{float(item['price']):.2f}" for item in data
 }
 
 class FormValues(BaseModel):
