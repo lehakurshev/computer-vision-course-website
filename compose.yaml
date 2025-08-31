@@ -8,14 +8,15 @@ services:
       args:
         VITE_SERVER_HOST: ${SERVER_HOST}
     volumes:
-      - ./const:/app/const
-      - ./data:/etc/nginx/certs
+      - ./const:/app/const  # Монтирование папки с константами
+      - ./data:/etc/nginx/certs # Монтирование сертификатов (убедитесь, что это правильный путь для сертификатов внутри контейнера)
+      - ./cvcourse-react-app/nginx/conf.d:/etc/nginx/conf.d # Монтирование конфигурации Nginx
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
       - "443:443"
     environment:
       VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
-      NGINX_HOST: cvcourse.ru
+      NGINX_HOST: cvcourse.ru  # Переменная окружения для Nginx (если используется в конфиге)
     networks:
       - web
     depends_on:
