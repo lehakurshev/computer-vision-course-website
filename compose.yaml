@@ -8,15 +8,14 @@ services:
       args:
         VITE_SERVER_HOST: ${SERVER_HOST}
     volumes:
-      - ./const:/app/const  # Монтирование папки с константами
-      - ./data:/etc/nginx/certs # Монтирование сертификатов (убедитесь, что это правильный путь для сертификатов внутри контейнера)
-      - ./cvcourse-react-app/nginx/conf.d:/etc/nginx/conf.d # Монтирование конфигурации Nginx
+      - ./const:/app/const
+      - ./data:/etc/nginx/certs
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
       - "443:443"
     environment:
       VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
-      NGINX_HOST: cvcourse.ru  # Переменная окружения для Nginx (если используется в конфиге)
+      NGINX_HOST: cvcourse.ru
     networks:
       - web
     depends_on:
@@ -41,27 +40,27 @@ services:
     volumes:
       - ./db_data:/app/db_data
 
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./data:/etc/letsencrypt
-      - ./data:/var/lib/letsencrypt
-      - ./data:/var/www/html  # Подключаем папку, куда Nginx смотрит за контентом.
-    depends_on:
-      - frontend
-    entrypoint: >
-      sh -c 'trap exit TERM; 
-      while :; do 
-        certbot certonly --webroot -w /var/www/html --agree-tos --non-interactive --domains ${NGINX_HOST} && 
-        cp /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/nginx/certs/ && 
-        cp /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ && 
-        nginx -s reload; 
-        sleep 12h & wait $${!}; 
-      done'
-    environment:
-      NGINX_HOST: cvcourse.ru  # Замените на ваш домен
-    networks:
-      - web
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./data:/etc/letsencrypt
+  #     - ./data:/var/lib/letsencrypt
+  #     - ./data:/var/www/html  # Подключаем папку, куда Nginx смотрит за контентом.
+  #   depends_on:
+  #     - frontend
+  #   entrypoint: >
+  #     sh -c 'trap exit TERM; 
+  #     while :; do 
+  #       certbot certonly --webroot -w /var/www/html --agree-tos --non-interactive --domains ${NGINX_HOST} && 
+  #       cp /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/nginx/certs/ && 
+  #       cp /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ && 
+  #       nginx -s reload; 
+  #       sleep 12h & wait $${!}; 
+  #     done'
+  #   environment:
+  #     NGINX_HOST: cvcourse.ru  # Замените на ваш домен
+  #   networks:
+  #     - web
 
 
 networks:
