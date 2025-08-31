@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ./frontend/cvcourse-react-app
+      context: ./cvcourse-react-app
       dockerfile: Dockerfile
       args:
         VITE_SERVER_HOST: ${SERVER_HOST}
