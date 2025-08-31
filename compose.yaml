@@ -9,20 +9,20 @@ services:
         VITE_SERVER_HOST: ${SERVER_HOST}
     volumes:
       - ./const:/app/const
-      - ./data:/etc/nginx/certs
+      - ./data:/etc/nginx/certs  # Монтируем сертификаты сюда
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf # Монтируем конфиг nginx
+      - ./cvcourse-react-app/dist:/usr/share/nginx/html # Монтируем dist-папку
     ports:
-      - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
+      - "80:80"
       - "443:443"
     environment:
-      VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
+      VITE_SERVER_HOST: ${SERVER_HOST}
       NGINX_HOST: cvcourse.ru
     networks:
       - web
     depends_on:
-      - backend  # Frontend зависит от backend'a
-    restart: always # Автоматический перезапуск при сбое
-
-
+      - backend
+    restart: always
 
   backend:
     build:
@@ -32,6 +32,8 @@ services:
         SERVER_HOST: ${SERVER_HOST}
     ports:
       - "8000:8000"
+    expose: #Делаем доступным только для внутренних сервисов
+      - "8000"
     environment:
       YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
@@ -39,13 +41,15 @@ services:
       GOOGLE_SHEET_CREDENTIALS: ${GOOGLE_SHEET_CREDENTIALS}
     volumes:
       - ./db_data:/app/db_data
+    networks:
+      - web
 
   certbot:
     image: certbot/certbot:latest
     volumes:
       - ./data:/etc/letsencrypt
       - ./data:/var/lib/letsencrypt
-      - ./data:/var/www/html # Подключаем папку, куда Nginx смотрит за контентом.
+      - ./cvcourse-react-app/dist:/var/www/html  # Монтируем dist-папку сюда, чтобы certbot мог проверить домен.
     depends_on:
       - frontend
     entrypoint: sh -c 'trap exit TERM; while :; do
@@ -54,7 +58,7 @@ services:
       nginx -s reload;
       sleep 12h & wait $${!}; done'
     environment:
-      NGINX_HOST: cvcourse.ru  # Замените на ваш домен
+      NGINX_HOST: cvcourse.ru
     networks:
       - web
 
@@ -62,4 +66,4 @@ networks:
   web:
 
 volumes:
-  app_dist: {}  # Объявляем именованный том
+  app_dist: {}
