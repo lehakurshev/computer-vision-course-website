@@ -9,10 +9,15 @@ services:
         VITE_SERVER_HOST: ${SERVER_HOST}
     volumes:
       - ./const:/app/const
+      - ./data:/etc/nginx/certs
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
+      - "443:443"
     environment:
       VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
+      NGINX_HOST: cvcourse.ru
+    networks:
+      - web
     depends_on:
       - backend  # Frontend зависит от backend'a
     restart: always # Автоматический перезапуск при сбое
@@ -35,6 +40,25 @@ services:
     volumes:
       - ./db_data:/app/db_data
 
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./data:/etc/letsencrypt
+      - ./data:/var/lib/letsencrypt
+    depends_on:
+      - nginx
+    entrypoint: sh -c 'trap exit TERM; while :; do
+      certbot renew --webroot -w /var/www/html --force-renewal --agree-tos --domains cvcourse.ru &&
+      cp -R /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ &&
+      nginx -s reload;
+      sleep 12h & wait $${!}; done'
+    environment:
+      NGINX_HOST: cvcourse.ru  # Замените на ваш домен или IP-адрес
+    networks:
+      - web
+
+networks:
+  web:
 
 volumes:
   app_dist: {}  # Объявляем именованный том
