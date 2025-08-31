@@ -49,8 +49,8 @@ services:
     depends_on:
       - frontend
     entrypoint: sh -c 'trap exit TERM; while :; do
-      certbot certonly --webroot -w /var/www/html --force-renewal --agree-tos --domains cvcourse.ru &&
-      cp /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ &&
+      certbot renew --webroot -w /var/www/html --force-renewal --agree-tos --domains cvcourse.ru &&
+      cp -R /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ &&
       nginx -s reload;
       sleep 12h & wait $${!}; done'
     environment:
