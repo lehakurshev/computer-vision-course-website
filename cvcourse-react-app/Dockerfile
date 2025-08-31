@@ -40,4 +40,4 @@ ARG VITE_SERVER_HOST
 ENV VITE_SERVER_HOST=${VITE_SERVER_HOST}
 
 # Команда для запуска Nginx и получения сертификатов
-CMD ["sh", "-c", "certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru && nginx -g 'daemon off;'"]
+# CMD ["sh", "-c", "certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru && nginx -g 'daemon off;'"]
