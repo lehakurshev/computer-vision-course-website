@@ -47,7 +47,7 @@ jobs:
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
             export GOOGLE_SHEET_CREDENTIALS='${{ env.GOOGLE_SHEET_CREDENTIALS }}'
             # Clean up unused Docker resources
-            docker system prune -f --volumes;
+            docker system prune -af --volumes;
             docker-compose down --rmi all --volumes;
-            docker-compose up --build --no-cache -d
+            docker-compose up --build -d
           "
