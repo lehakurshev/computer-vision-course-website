@@ -28,6 +28,9 @@ RUN mkdir -p /run && chown -R nginx:nginx /run && mkdir -p /var/cache/nginx && c
 # Меняем владельца файлов на пользователя Nginx
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
+# Установка Certbot
+RUN apk add --no-cache certbot certbot-nginx
+
 USER nginx
 
 EXPOSE 80
@@ -35,4 +38,6 @@ EXPOSE 443
 
 ARG VITE_SERVER_HOST
 ENV VITE_SERVER_HOST=${VITE_SERVER_HOST}
-CMD ["nginx", "-g", "daemon off;"]
+
+# Команда для запуска Nginx и получения сертификатов
+CMD ["sh", "-c", "certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d cvcourse.ru && nginx -g 'daemon off;'"]

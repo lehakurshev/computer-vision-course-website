@@ -40,27 +40,6 @@ services:
     volumes:
       - ./db_data:/app/db_data
 
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./data:/etc/letsencrypt
-      - ./data:/var/lib/letsencrypt
-      - ./data:/var/www/html  # Подключаем папку, куда Nginx смотрит за контентом.
-    depends_on:
-      - frontend
-    entrypoint: >
-      sh -c 'trap exit TERM; 
-      while :; do 
-        certbot certonly --webroot -w /var/www/html --agree-tos --non-interactive --domains ${NGINX_HOST} && 
-        cp /etc/letsencrypt/live/${NGINX_HOST}/fullchain.pem /etc/nginx/certs/ && 
-        cp /etc/letsencrypt/live/${NGINX_HOST}/privkey.pem /etc/nginx/certs/ && 
-        nginx -s reload; 
-        sleep 12h & wait $${!}; 
-      done'
-    environment:
-      NGINX_HOST: cvcourse.ru  # Замените на ваш домен
-    networks:
-      - web
 
 
 networks:
