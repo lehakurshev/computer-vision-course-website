@@ -39,6 +39,9 @@ jobs:
             git reset --hard origin/main;
           "
 
+          # Copy consultations.json to the server
+          scp -o StrictHostKeyChecking=no cvcourse-react-app/const/consultations.json ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.PROJECT_PATH }}/server/
+
           # Run Docker Compose
           ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
             cd ${{ env.PROJECT_PATH }};

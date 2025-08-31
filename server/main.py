@@ -94,35 +94,6 @@ async def get_description(id: str):
 
     return result[0]['description']
 
-# Webhook.add({
-#     "event": "payment.succeeded",
-#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
-# })
-
-# Webhook.add({
-#     "event": "payment.waiting_for_capture",
-#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
-# })
-
-# @app.post('/yookassa-webhook')
-# async def handle_payment(request: Request):
-#     event_json = await request.json()
-#     payment_id = event_json['object']['id']
-#     user_id = event_json['object']['metadata']['user_id']
-    
-#     if event_json['event'] == 'payment.succeeded':
-
-#         amount = event_json['object']['amount']['value']
-#         payment_method_id = event_json['object']['payment_method']['id']
-        
-#         print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
-        
-
-#     elif event_json['event'] == 'payment.waiting_for_capture':
-#         Payment.capture(payment_id)
-        
-#     return {"status": "ok"}
-
 
 def get_paid_payments_description() -> List[str]:
     """Retrieves IDs of paid payments."""
@@ -227,50 +198,83 @@ async def save_description_to_sheet(id: str):
 
     print(f"message: Description saved to Google Sheet, id: {id}")
 
+# ===================================================================================
 
-@app.get("/all-payments")
-async def get_payments():
-    all_payments = []
-    cursor = None
+# Webhook.add({
+#     "event": "payment.succeeded",
+#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+# })
 
-    while True:
-        try:
-            payments = Payment.list({"limit": 100, "cursor": cursor})
-            all_payments.extend(payments.items)
+# Webhook.add({
+#     "event": "payment.waiting_for_capture",
+#     "url": f"http://{os.getenv('SERVER_HOST')}:8000/yookassa-webhook"
+# })
 
-            # Если есть следующий курсор, продолжаем запросы
-            if not payments.next_cursor:
-                break
-            cursor = payments.next_cursor
+# @app.post('/yookassa-webhook')
+# async def handle_payment(request: Request):
+#     event_json = await request.json()
+#     payment_id = event_json['object']['id']
+#     user_id = event_json['object']['metadata']['user_id']
+    
+#     if event_json['event'] == 'payment.succeeded':
 
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+#         amount = event_json['object']['amount']['value']
+#         payment_method_id = event_json['object']['payment_method']['id']
+        
+#         print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
+        
 
-    return {"type": "list", "items": all_payments}
+#     elif event_json['event'] == 'payment.waiting_for_capture':
+#         Payment.capture(payment_id)
+        
+#     return {"status": "ok"}
+
+# ===================================================================================
+
+
+# @app.get("/all-payments")
+# async def get_payments():
+#     all_payments = []
+#     cursor = None
+
+#     while True:
+#         try:
+#             payments = Payment.list({"limit": 100, "cursor": cursor})
+#             all_payments.extend(payments.items)
+
+#             # Если есть следующий курсор, продолжаем запросы
+#             if not payments.next_cursor:
+#                 break
+#             cursor = payments.next_cursor
+
+#         except Exception as e:
+#             raise HTTPException(status_code=500, detail=str(e))
+
+#     return {"type": "list", "items": all_payments}
     
 
 
-# 
-@app.get("/get-yookassa-widget")
-async def get_yookassa_widget():
-    payment = Payment.create({
-        "amount": {
-            "value": "2.00",
-            "currency": "RUB"
-        },
-        "confirmation": {
-            "type": "embedded"
-        },
-        "capture": False,
-        "description": "Заказ №72"
-    })
+# # 
+# @app.get("/get-yookassa-widget")
+# async def get_yookassa_widget():
+#     payment = Payment.create({
+#         "amount": {
+#             "value": "2.00",
+#             "currency": "RUB"
+#         },
+#         "confirmation": {
+#             "type": "embedded"
+#         },
+#         "capture": False,
+#         "description": "Заказ №72"
+#     })
 
-    # Чтение HTML-кода из файла
-    file_path = os.path.join(os.path.dirname(__file__), 'yookassa.html')
-    with open(file_path, 'r', encoding='utf-8') as file:
-        html_content = file.read()
+#     # Чтение HTML-кода из файла
+#     file_path = os.path.join(os.path.dirname(__file__), 'yookassa.html')
+#     with open(file_path, 'r', encoding='utf-8') as file:
+#         html_content = file.read()
 
-    # Замена плейсхолдера на фактический токен подтверждения
-    html_content = html_content.replace("$$$confirmation_token$$$", payment.confirmation.confirmation_token)
+#     # Замена плейсхолдера на фактический токен подтверждения
+#     html_content = html_content.replace("$$$confirmation_token$$$", payment.confirmation.confirmation_token)
 
-    return Response(content=html_content, media_type="text/html")
+#     return Response(content=html_content, media_type="text/html")

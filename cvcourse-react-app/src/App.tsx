@@ -25,9 +25,9 @@ import { type SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios';
 
 
-import аccordionСontent1 from '../Программа_курса_часть_1.json';
-import аccordionСontent2 from '../Программа_курса_часть_2.json';
-import consultationsData from '../consultations.json';
+import аccordionСontent1 from '../const/Программа_курса_часть_1.json';
+import аccordionСontent2 from '../const/Программа_курса_часть_2.json';
+import consultationsData from '../const/consultations.json';
 
 interface AccordionItem {
   title: string;
