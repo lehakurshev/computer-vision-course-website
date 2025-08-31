@@ -8,8 +8,7 @@ services:
       args:
         VITE_SERVER_HOST: ${SERVER_HOST}
     volumes:
-      - app_dist:/app
-      - ../const:/const
+      - ../const:/app/const
     ports:
       - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
     environment:
