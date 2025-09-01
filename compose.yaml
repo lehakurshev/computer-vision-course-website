@@ -24,7 +24,7 @@ services:
     volumes:
       - etc-letsencrypt:/etc/letsencrypt
       - www-html:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email qgisnn@gmail.com --agree-tos --no-eff-email -d cvcoutse.ru
+    command: certonly --webroot --webroot-path=/var/www/html --email qgisnn@gmail.com --agree-tos --no-eff-email -d cvcourse.ru
  
 volumes:
   www-html:
