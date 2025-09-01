@@ -208,7 +208,7 @@ Webhook.add({
 @app.post('/yookassa-webhook')
 async def handle_payment(request: Request):
     event_json = await request.json()
-    payment_id = event_json['object']['description']
+    payment_id = event_json['object']['id']
     user_id = event_json['object']['metadata']['user_id']
     
     if event_json['event'] == 'payment.succeeded':
@@ -218,7 +218,7 @@ async def handle_payment(request: Request):
         
         print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
 
-        save_description_to_sheet(payment_id)
+        save_description_to_sheet(payment_id = event_json['object']['description'])
         
 
     elif event_json['event'] == 'payment.waiting_for_capture':
