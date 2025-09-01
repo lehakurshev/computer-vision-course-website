@@ -204,7 +204,7 @@ function App() {
     const fetchConfirmationToken = async () => {
       try {
         const response = await axios.post(
-          `http://${import.meta.env.VITE_SERVER_HOST}:8000/confirmation-token-and-description-id`,
+          `https://${import.meta.env.VITE_SERVER_HOST}/api/confirmation-token-and-description-id`,
           formValues
         );
         const data = response.data
@@ -217,7 +217,7 @@ function App() {
 
         const checkout = new (window as any).YooMoneyCheckoutWidget({
           confirmation_token: token, // Use the fetched token
-          return_url: `http://${import.meta.env.VITE_SERVER_HOST}:8000/yookassa-resolver/${data[1]}`,
+          return_url: `https://${import.meta.env.VITE_SERVER_HOST}/api/yookassa-resolver/${data[1]}`,
 
           customization: {
             colors: {
