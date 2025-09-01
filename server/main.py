@@ -18,8 +18,7 @@ app = FastAPI()
 
 # Настройка CORS
 origins = [
-    f"http://{os.getenv('SERVER_HOST')}",
-    f"http://{os.getenv('SERVER_HOST')}:80"
+    f"https://{os.getenv('SERVER_HOST')}"
 ]
 app.add_middleware(
     CORSMiddleware,
