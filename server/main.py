@@ -27,15 +27,6 @@ app.add_middleware(
 # Конфигурация YooKassa
 Configuration.configure(os.getenv('YOOKASSA_SHOP_ID'), os.getenv('YOOKASSA_SHOP_SECRET'))
 
-Webhook.add({
-    "event": "payment.succeeded",
-    "url": f"https://{os.getenv('SERVER_HOST')}/api/yookassa-webhook"
-})
-
-Webhook.add({
-    "event": "payment.waiting_for_capture",
-    "url": f"https://{os.getenv('SERVER_HOST')}/api/yookassa-webhook"
-})
 
 # Настройка базы данных TinyDB
 db = TinyDB('/app/db_data/descriptions.json')
@@ -205,26 +196,38 @@ async def save_description_to_sheet(id: str):
 
 # ===================================================================================
 
-@app.post('/api/yookassa-webhook')
-async def handle_payment(request: Request):
-    event_json = await request.json()
-    payment_id = event_json['object']['id']
-    user_id = event_json['object']['metadata']['user_id']
+# Configuration.configure_auth_token('<Bearer Token>')
+
+# Webhook.add({
+#     "event": "payment.succeeded",
+#     "url": f"https://{os.getenv('SERVER_HOST')}/api/yookassa-webhook"
+# })
+
+# Webhook.add({
+#     "event": "payment.waiting_for_capture",
+#     "url": f"https://{os.getenv('SERVER_HOST')}/api/yookassa-webhook"
+# })
+
+# @app.post('/api/yookassa-webhook')
+# async def handle_payment(request: Request):
+#     event_json = await request.json()
+#     payment_id = event_json['object']['id']
+#     user_id = event_json['object']['metadata']['user_id']
     
-    if event_json['event'] == 'payment.succeeded':
+#     if event_json['event'] == 'payment.succeeded':
 
-        amount = event_json['object']['amount']['value']
-        payment_method_id = event_json['object']['payment_method']['id']
+#         amount = event_json['object']['amount']['value']
+#         payment_method_id = event_json['object']['payment_method']['id']
         
-        print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
+#         print(f"Платеж {payment_id} успешен! User: {user_id}, Amount: {amount}")
 
-        save_description_to_sheet(payment_id = event_json['object']['description'])
+#         save_description_to_sheet(payment_id = event_json['object']['description'])
         
 
-    elif event_json['event'] == 'payment.waiting_for_capture':
-        Payment.capture(payment_id)
+#     elif event_json['event'] == 'payment.waiting_for_capture':
+#         Payment.capture(payment_id)
         
-    return {"status": "ok"}
+#     return {"status": "ok"}
 
 # ===================================================================================
 
