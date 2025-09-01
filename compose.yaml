@@ -1,52 +1,38 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  frontend:
-    build:
-      context: ./cvcourse-react-app
-      dockerfile: Dockerfile
-      args:
-        VITE_SERVER_HOST: ${SERVER_HOST}
-    volumes:
-      - ./const:/app/const
-      - ./data:/etc/nginx/certs
-      - letsencrypt_data:/etc/letsencrypt  # Монтируем том для сертификатов
-    ports:
-      - "80:80"  # Проксируем порт 80 на хосте к порту 80 в контейнере
-      - "443:443"
-    environment:
-      VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
-      NGINX_HOST: cvcourse.ru
-    networks:
-      - web
+
+  nginx:
+    image: nginx:1.19.8-alpine
     depends_on:
-      - backend  # Frontend зависит от backend'a
-    restart: always # Автоматический перезапуск при сбое
-    
-
-
-
-  backend:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-      args:
-        SERVER_HOST: ${SERVER_HOST}
+      - wp
+    container_name: nginx
+    restart: unless-stopped
     ports:
-      - "8000:8000"
-    environment:
-      YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
-      YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
-      SERVER_HOST: ${SERVER_HOST}
-      GOOGLE_SHEET_CREDENTIALS: ${GOOGLE_SHEET_CREDENTIALS}
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./db_data:/app/db_data
+      - www-html:/var/www/html
+      - ./nginx-conf.d:/etc/nginx/conf.d
+      - etc-letsencrypt:/etc/letsencrypt
+    networks:
+      - app
 
-
+  certbot:
+    image: certbot/certbot
+    depends_on:
+      - nginx
+    container_name: certbot
+    volumes:
+      - etc-letsencrypt:/etc/letsencrypt
+      - www-html:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email qgisnn@gmail.com --agree-tos --no-eff-email -d cvcoutse.ru
+ 
+volumes:
+  www-html:
+  dbfile:
+  etc-letsencrypt:
 
 networks:
-  web:
-
-volumes:
-  app_dist: {}  # Объявляем именованный том
-  letsencrypt_data:
+  app:
+    driver: bridge

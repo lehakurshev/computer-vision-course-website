@@ -48,9 +48,14 @@ jobs:
             export SERVER_HOST='${{ env.SERVER_HOST }}';
             export YOOKASSA_SHOP_ID='${{ env.YOOKASSA_SHOP_ID }}';
             export YOOKASSA_SHOP_SECRET='${{ env.YOOKASSA_SHOP_SECRET }}';
-            export GOOGLE_SHEET_CREDENTIALS='${{ env.GOOGLE_SHEET_CREDENTIALS }}'
+            export GOOGLE_SHEET_CREDENTIALS='${{ env.GOOGLE_SHEET_CREDENTIALS }}';
+            
             # Clean up unused Docker resources
             docker system prune -af --volumes;
+
+            # Stop and remove existing containers and images
             docker-compose down --rmi all --volumes;
+
+            # Build and run new containers
             docker-compose up --build -d
           "
