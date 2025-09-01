@@ -30,7 +30,7 @@ RUN chown -R nginx:nginx /usr/share/nginx/html
 
 USER nginx
 
-EXPOSE 80
+EXPOSE 3000
 
 ARG VITE_SERVER_HOST
 ENV VITE_SERVER_HOST=${VITE_SERVER_HOST}

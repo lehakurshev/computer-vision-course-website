@@ -10,7 +10,7 @@ services:
     volumes:
       - ./const:/app/const
     ports:
-      - "80:3000"  # Проксируем порт 80 на хосте к порту 80 в контейнере
+      - "3000:3000"  # Проксируем порт 80 на хосте к порту 80 в контейнере
     environment:
       VITE_SERVER_HOST: ${SERVER_HOST}  # Переменная окружения для React приложения
     depends_on:
@@ -26,7 +26,7 @@ services:
       args:
         SERVER_HOST: ${SERVER_HOST}
     ports:
-      - "8000:8080"
+      - "8000:8000"
     environment:
       YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
       YOOKASSA_SHOP_SECRET: ${YOOKASSA_SHOP_SECRET}
