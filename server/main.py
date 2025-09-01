@@ -10,6 +10,7 @@ from tinydb import TinyDB, Query
 from typing import List, Dict, Any
 import re
 import time
+from payment_utils import create_payment
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -65,20 +66,15 @@ async def get_confirmation_token(form_values: FormValues = Body(...)):
     # Сохранение описания в базе данных
     db.insert({'id': unique_id, 'description': str(form_values)})
 
-    # Создание платежа с использованием уникального идентификатора
-    payment = Payment.create({
-        "amount": {
-            "value": value,
-            "currency": "RUB"
-        },
-        "confirmation": {
-            "type": "embedded"
-        },
-        "capture": False,
-        "description": f"{unique_id}"
-    })
+    try:
+        # Создание платежа с использованием выделенной функции
+        confirmation_token, payment_id = create_payment(amount=value, description=unique_id)
 
-    return (payment.confirmation.confirmation_token, unique_id)
+        return (confirmation_token, unique_id) # Возвращаем все необходимые данные
+
+    except Exception as e:
+        # Обработка ошибок, возникших при создании платежа
+        raise HTTPException(status_code=500, detail=f"Failed to create payment: {e}")
 
 @app.get("/api/description/{id}")
 async def get_description(id: str):
@@ -102,7 +98,7 @@ def get_paid_payments_description() -> List[str]:
             # Фильтруем платежи по условию paid == true
             for payment in payments.items:
                 if hasattr(payment, 'paid') and payment.paid:
-                    secure_payments_ids.append(payment.description) # Store id
+                    secure_payments_ids.append(payment.description)
 
             # Если есть следующий курсор, продолжаем запросы
             if not payments.next_cursor:
@@ -112,7 +108,7 @@ def get_paid_payments_description() -> List[str]:
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    return secure_payments_ids  # Return the list of IDs
+    return secure_payments_ids
 
 
 def get_google_sheet(sheet_name: str):
