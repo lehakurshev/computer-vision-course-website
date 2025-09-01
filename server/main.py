@@ -205,7 +205,7 @@ Webhook.add({
     "url": f"https://{os.getenv('SERVER_HOST')}/api/yookassa-webhook"
 })
 
-@app.post('/yookassa-webhook')
+@app.post('/api/yookassa-webhook')
 async def handle_payment(request: Request):
     event_json = await request.json()
     payment_id = event_json['object']['id']
