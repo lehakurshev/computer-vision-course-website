@@ -48,7 +48,7 @@ class FormValues(BaseModel):
     messenger: str
     email: str
 
-@app.post("/confirmation-token-and-description-id")
+@app.post("/api/confirmation-token-and-description-id")
 async def get_confirmation_token(form_values: FormValues = Body(...)):
     value = CONSULTATION_TYPE_MAPPING.get(form_values.consult)
 
@@ -79,7 +79,7 @@ async def get_confirmation_token(form_values: FormValues = Body(...)):
 
     return (payment.confirmation.confirmation_token, unique_id)
 
-@app.get("/description/{id}")
+@app.get("/api/description/{id}")
 async def get_description(id: str):
     # Получение описания по уникальному идентификатору
     result = db.search(Description.id == id)
@@ -129,7 +129,7 @@ def description_to_dict(description: str) -> Dict[str, str]:
     except Exception:
         return {}
 
-@app.get("/yookassa-resolver/{id}")
+@app.get("/api/yookassa-resolver/{id}")
 async def yookassa_resolver(id: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(save_description_to_sheet, id)
     return RedirectResponse(url=f"http://{os.getenv('SERVER_HOST')}", status_code=status.HTTP_303_SEE_OTHER)
