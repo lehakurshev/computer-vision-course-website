@@ -28,6 +28,7 @@ import axios from 'axios';
 import аccordionСontent1 from '../const/Программа_курса_часть_1.json';
 import аccordionСontent2 from '../const/Программа_курса_часть_2.json';
 import consultationsData from '../const/consultations.json';
+import links from '../const/refs.json'
 
 interface AccordionItem {
   title: string;
@@ -81,6 +82,18 @@ interface Consultation {
   label: string;
 }
 
+interface Refs {
+"курс на степике часть 1": string,
+"курс на степике часть 2": string,
+"Email": string,
+"telegram": string,
+"github": string,
+"Блог": string,
+"Оферта": string,
+"Политика конфиденциальности": string,
+"Согласие на обработку персональных данных": string
+}
+
 const validateField = (name: keyof FormValues, value: string): string | undefined => {
   const v = value.trim()
   switch (name) {
@@ -123,9 +136,12 @@ function App() {
 
   const [consultations, setConsultations] = useState<Consultation[]>([]);
 
+  const [refs, setRefs] = useState<Refs>();
+
   useEffect(() => {
     // Загрузка данных из JSON
     setConsultations(consultationsData);
+    setRefs(links)
   }, []);
 
 
@@ -631,20 +647,20 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">Ресурсы</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Блог</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Оферта</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Политика конфиденциальности</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition">Согласие на обработку персональных данных</a></li>
+                <li><a href={refs?.Блог} className="text-gray-400 hover:text-white transition">Блог</a></li>
+                <li><a href={refs?.Оферта} className="text-gray-400 hover:text-white transition">Оферта</a></li>
+                <li><a href={refs?.['Политика конфиденциальности']} className="text-gray-400 hover:text-white transition">Политика конфиденциальности</a></li>
+                <li><a href={refs?.['Согласие на обработку персональных данных']} className="text-gray-400 hover:text-white transition">Согласие на обработку персональных данных</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Связаться с нами</h4>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white text-xl"><i className="fab fa-telegram"></i></a>
-                <a href="#" className="text-gray-400 hover:text-white text-xl"><i className="fab fa-github"></i></a>
+                <a href={refs?.telegram} className="text-gray-400 hover:text-white text-xl"><i className="fab fa-telegram"></i></a>
+                <a href={refs?.github} className="text-gray-400 hover:text-white text-xl"><i className="fab fa-github"></i></a>
               </div>
               <div className="mt-4">
-                <p className="text-gray-400">Email: info@cvcourse.ru</p>
+                <p className="text-gray-400">Email: {refs?.Email}</p>
               </div>
             </div>
           </div>

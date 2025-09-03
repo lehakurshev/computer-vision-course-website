@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import telegramPostsData from './telegramPosts.json'; // Import the JSON data
+import telegramPostsData from '../const/telegramPosts.json'; // Import the JSON data
 
 const TelegramPostsGallery: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
