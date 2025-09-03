@@ -362,7 +362,7 @@ function App() {
               <div className="flex justify-between items-center mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-2xl font-semibold text-blue-600">Часть 1</h3>
                 <a
-                  href="#"
+                  href={refs?.['курс на степике часть 1']}
                   className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white active:text-white px-3 py-1.5 sm:px-6 sm:py-2 rounded-md sm:rounded-lg text-sm sm:text-base font-medium transition duration-300 flex items-center"
                   aria-label="Смотреть на Stepik (открыть в новой вкладке)">
                   Смотреть на Stepik
@@ -397,7 +397,7 @@ function App() {
               <div className="flex justify-between items-center mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-2xl font-semibold text-blue-600">Часть 2</h3>
                 <a
-                  href="#"
+                  href={refs?.['курс на степике часть 2']}
                   className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white active:text-white px-3 py-1.5 sm:px-6 sm:py-2 rounded-md sm:rounded-lg text-sm sm:text-base font-medium transition duration-300 flex items-center"
                   aria-label="Смотреть на Stepik (открыть в новой вкладке)">
                   Смотреть на Stepik
